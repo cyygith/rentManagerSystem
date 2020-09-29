@@ -1,0 +1,49 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(253, 252, 252);
+}
+.rentDeposit-panel{
+    background-color: rgb(240, 235, 235);
+}
+table{
+    width: 100%;
+    height:100%;
+    border: 1px solid black;
+}
+    .c-title{
+        text-align: center;
+        font-size: 1.3rem;
+    }
+        .c-title{
+
+        }
+            .cc-no{
+                color: red;
+            }
+
+        .c-info{
+            display: flex;
+        }
+            .cc-time{
+                margin-left: auto;
+                padding-right: 1rem;
+            }
+        .c-foot{
+            display: flex;
+        }
+            .cc-customer{
+                margin-left: auto;
+                padding-right: 1rem;
+            }
+    .recepitPanel{
+        padding: 1rem;
+    }
+    .c-table{
+        line-height: 2rem;
+    }
+
+    
+        
+
+        

@@ -1,0 +1,39 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(243, 239, 239);
+}
+.renthouse-panel{
+    background-color: grey;
+}
+    .head-panel{
+        background: lightblue;
+        padding: 0.7rem;
+    }
+        .head-back{
+            background-color: rgb(140, 205, 224);
+            color: white;
+            border: 0px;    
+            padding: 0.5rem 0.5rem;
+        }
+
+        .c-item{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            padding: 1rem;
+            background-color: white;
+            border-bottom: 1px solid rgb(214, 210, 210);
+        }
+            .cc-name{
+                width: 4rem;
+            }
+            .cc-value{
+                flex-grow: 1;
+                text-align: right;  
+                margin-right: 2rem;
+            }
+                .ccc-span{
+                    font-weight: bold;
+                    margin-left: 0.5rem;
+                }
