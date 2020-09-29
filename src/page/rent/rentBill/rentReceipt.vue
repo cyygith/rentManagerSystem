@@ -1,5 +1,5 @@
 <template>
-    <div class="rentReceipt-panel">
+    <div class="rentReceipt-panel" id="receiptPanel">
         <div class="head-panel">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
         </div>
@@ -49,7 +49,7 @@
                         <td>{{form.waterPayType==1?form.lastWater:''}}</td>
                         <td>{{form.waterPayType==1?form.currWater:''}}</td>
                         <td>{{form.waterPayType==1?(form.currWater-form.lastWater):(form.rentNum*10)}}</td>
-                        <td>{{form.waterPayType==1?'5元/吨':10元/人''}}</td>
+                        <td>{{form.waterPayType==1?'5元/吨':'10元/人'}}</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -185,8 +185,8 @@ export default {
         },
         resize(){
         	let width = window.innerWidth,
-        	 	height = wiindow.innerHeight,
-        	 	$wrapper = document.getElementById("app"),
+        	 	height = window.innerHeight,
+        	 	$wrapper = document.getElementById("receiptPanel"),
         	 	style = "";
         	if(width >= height){//横屏
         		style += "width:" + width + "px;";

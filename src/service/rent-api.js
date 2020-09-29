@@ -113,7 +113,7 @@ const contractApi = {
 const billApi = {
   // list
   list (params) {
-    return axios.post(`${baseUrl}/rentBill/getByExample`, params)
+    return axios.post(`${baseUrl}/rentBill/list`, params)
   },
   // 删除
   deleteByIds (params) {
