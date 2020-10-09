@@ -6,7 +6,7 @@
         <div class="content-panel">
             <div class="c-item">
                 <div class="cc-name">房屋编号</div>
-                <div class="cc-value">{{out.groupName}} {{out.houseName}}</div>
+                <div class="cc-value">{{form.groupName}} {{form.houseName}}</div>
             </div>
             <div class="c-item">
                 <div class="cc-name">租金</div>
@@ -103,12 +103,23 @@ export default {
     },
     mounted(){
         this.detail();
-        this.out.groupName = this.$route.query.groupName;
-        this.out.houseName = this.$route.query.houseName;
-        this.form.houseCode = this.$route.query.houseCode;
     },
     watch:{
- 
+        "form.sum":function(){
+            if(this.form.waterPayType == '1'){//水费按吨结算
+                if(this.form.currWater!=null&&this.form.lastWater!=null){
+                    this.waterFee = parseFloat(this.form.currWater - this.form.lastWater)*5;
+                }
+            }else{//按人数算
+                if(this.form.rentNum!=null){
+                    this.waterFee = this.form.rentNum * 10;
+                }
+            }
+            if(this.form.currElectric!=null&&this.form.lastElectric!=null&&this.form.currElectric!=""){
+                this.elecFee = this.form.currElectric - this.form.lastElectric;//电费
+            }
+
+        },
     },
     methods:{
         // 退出登录
@@ -121,12 +132,16 @@ export default {
         },
         // 获取详情
         detail(){
-            let houseCode = this.$route.query.houseCode;
+            let id = this.$route.query.id;
             let param = new URLSearchParams();
-            param.append("houseCode",houseCode);
+            param.append("id",id);
+            console.log("param....");
+            console.dir(id);
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
             billApi.getByCondition(param).then((res)=>{
                 if(res.code == "0"){
+                    console.log("rentBillDetail.....");
+                    console.dir(res.data);
                     if(res.data){    
                         this.form = res.data;
                         this.form.waterPayTypeName = this.waterPayTypeArr[res.data.waterPayType];

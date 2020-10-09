@@ -37,7 +37,7 @@
             <div class="center-tips" v-if="showLoginTips" @click="login">为避免数据丢失，建议登录哟~~</div>
             <!--详细列表信息-->
             <div class="center-content">
-                <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex" @click="toDetail">
+                <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex">
 		            <div class="c-img">{{tItem.houseName}}</div>
 		            <div class="c-other" @click="toDetail(tItem)">
 		                <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
@@ -75,7 +75,7 @@ export default {
             monthSumMap:{},
             showLoginTips:false,
             page:{
-            	pageSize:2,
+            	pageSize:10,
             	currPage:0,
             	totalPage:0
             },
@@ -340,6 +340,8 @@ export default {
     .foot-panel{
         padding: 0.3rem;
     }
+}
+.center{
     .load-more{
     	text-align:center;
     }

@@ -90,7 +90,9 @@ export default {
         // this.detail();
         this.id = this.$route.query.id;
         this.form.id = this.$route.query.id;
+        this.form.startTime = this.$route.query.startTime;
         this.form.houseCode = this.$route.query.houseCode;
+        this.form.endTime = this.$route.query.endTime;
         this.showItem = this.$route.query.showItem;
         this.form[this.showItem] = this.$route.query.showItemValue;
     },

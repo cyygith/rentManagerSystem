@@ -2,12 +2,12 @@
     <div class="bill-panel">
         <div class="head-panel">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
-            <button class="btnclass head-save">生成收据</button>
+            <button class="btnclass head-save" @click="toReceipt">生成收据</button>
         </div>
         <div class="content-panel">
             <div class="c-item">
                 <div class="cc-name">房屋编号</div>
-                <div class="cc-value">{{out.groupName}} {{out.houseName}}</div>
+                <div class="cc-value">{{form.groupName}} {{form.houseName}}</div>
             </div>
             <div class="c-item">
                 <div class="cc-name">租金</div>
@@ -88,6 +88,9 @@ export default {
             	sum:0,
             	createTime:'',
             	updateTime:'',
+                groupName:null,
+                houseName:null
+
             },
             out:{
                 groupName:'',
@@ -103,10 +106,7 @@ export default {
 
     },
     mounted(){
-        this.detail();
-        this.out.groupName = this.$route.query.groupName;
-        this.out.houseName = this.$route.query.houseName;
-        this.form.houseCode = this.$route.query.houseCode;
+        this.doRent();
     },
     watch:{
         "form.sum":function(){
@@ -120,12 +120,13 @@ export default {
                 }
                 
             }
-            if(this.form.currElectric!=null&&this.form.lastElectric!=null){
+            if(this.form.currElectric!=null&&this.form.lastElectric!=null&&this.form.currElectric!=""){
                 this.elecFee = this.form.currElectric - this.form.lastElectric;//电费
             }
 
-            this.form.sum = parseFloat(this.form.money)+parseFloat(this.elecFee)+parseFloat(this.waterFee);
+            this.form.sum = parseFloat(this.form.money==''?0:this.form.money)+parseFloat(this.elecFee)+parseFloat(this.waterFee);
         },
+    
     },
     methods:{
         // 退出登录
@@ -133,7 +134,7 @@ export default {
             this.$router.push('/login');
         },
         //返回上一页
-        backBefore(){
+        backBefore(){ 
             this.$router.back(-1);
         },
         //编辑详情
@@ -141,29 +142,58 @@ export default {
             this.$router.push({path:'rentBillModify',query:{id:this.form.id,showItem:item,showItemValue:value,houseCode:this.form.houseCode}});
         },
         //生成房屋收据
-        toEdit(item,value){
-            this.$router.push({path:'rentReceipt',query:{id:this.form.id}});
+        toReceipt(item,value){
+            // this.$router.push({path:'rentReceipt',query:{id:this.form.id}});
+            let param = {
+                id:this.form.id,
+                sum:this.form.sum,
+                status:'1'
+            };
+            console.log("c参数是多少");
+            console.dir(param);
+            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            billApi.saveOrUpdate(param).then((res)=>{
+                if(res.code == "0"){
+                    this.$message({
+                        message: '生成成功',
+                        center: true,
+                        type: 'success',
+                        customClass:'customClass',
+                        offset:300
+                    })
+                }else{
+                    this.$alert('提交失败，请联系管理员处理','提示信息');
+                }
+                loading.close();
+            });	
         },
-        // 获取详情
-        detail(){
+        // 从收租界面跳过来
+        doRent(){
             let houseCode = this.$route.query.houseCode;
+            let houseId = sessionStorage.getItem("houseId");
             let param = new URLSearchParams();
             param.append("houseCode",houseCode);
+            if(!!houseId) {
+                param.append("id",houseId);
+            }
+            // let param = {
+            //     houseCode:houseCode
+            // }
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
-            billApi.getByCondition(param).then((res)=>{
+            billApi.doRent(param).then((res)=>{
                 if(res.code == "0"){
-                    console.log("logggging....value:");
+                    console.log("收租完是什么:");
                     console.dir(res.data);
                     if(res.data){    
                         this.form = res.data;
-                        this.form.waterPayTypeName = this.waterPayTypeArr[res.data.waterPayType];
-                        this.form.payTypeName = this.payTypeArr[res.data.payType];
+                        this.form.waterPayTypeName = this.waterPayTypeArr[res.data.waterPayType];//水费支付方式
+                        this.form.payTypeName = this.payTypeArr[res.data.payType];//电费支付方式
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
                 loading.close();
-            });	
+            });	 
         },
     }
 }

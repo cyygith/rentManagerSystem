@@ -80,7 +80,7 @@ export default {
         lastPage(){
         	this.page.currPage = this.page.currPage-1;
             this.queryList();
-        }
+        },
         //编辑详情
         toDetail(item){
             this.$router.push({path:'rentBillDetail',query:{id:item.id}});

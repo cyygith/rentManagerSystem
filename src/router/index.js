@@ -61,6 +61,7 @@ let router = new Router({
           component: resolve => require(['../page/rent/me/me.vue'], resolve),
           meta: { title: '我的' }
         },
+        {path: '/function',component: resolve => require(['../page/rent/function/function.vue'], resolve),meta: { title: '功能' }},
       ]
     },
     //租房-账单管理

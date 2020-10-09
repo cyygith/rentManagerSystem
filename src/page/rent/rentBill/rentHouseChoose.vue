@@ -79,7 +79,7 @@ export default {
         },
         //收租
         takeRent(){
-            this.$router.push({path:'rentBill',query:{groupName:this.chooseItem.groupName,houseName:this.chooseItem.houseName,houseCode:this.chooseItem.houseCode}});
+            this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:this.chooseItem.groupName,houseName:this.chooseItem.houseName,houseCode:this.chooseItem.houseCode}});
         },
         //选中收租情况
         toRent(item){
