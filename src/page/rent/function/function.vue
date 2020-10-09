@@ -5,12 +5,12 @@
         </div>
         <div class="content-panel">
             <div class="c-item">
-                <div class="cc-name">房租管理</div>
-                <div class="cc-value" @click="toEdit('money',form.money);"><span class="ccc-span">></span></div>
+                <div class="cc-name">房组管理</div>
+                <div class="cc-value" @click="toGroup"><span class="ccc-span">></span></div>
             </div>
             <div class="c-item">
                 <div class="cc-name">房屋管理</div>
-                <div class="cc-value" @click="toEdit('money',form.money);"><span class="ccc-span">></span></div>
+                <div class="cc-value" @click="toHouse"><span class="ccc-span">></span></div>
             </div>
             <div class="c-item">
                 <div class="cc-name">租客管理</div>
@@ -56,9 +56,13 @@ export default {
         backBefore(){ 
             this.$router.back(-1);
         },
-        //编辑详情
-        toEdit(item,value){
-            this.$router.push({path:'rentBillModify',query:{id:this.form.id,showItem:item,showItemValue:value,houseCode:this.form.houseCode}});
+        //房组管理
+        toGroup(item,value){
+            this.$router.push({path:'rentGroupList',query:{}});
+        },
+        //房屋管理
+        toHouse(item,value){
+            this.$router.push({path:'rentHouseList',query:{}});
         },
         
     }

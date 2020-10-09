@@ -70,6 +70,13 @@ let router = new Router({
     {path: '/rentBillModify',component: resolve => require(['../page/rent/rentBill/rentBillModify.vue'], resolve)},
     {path: '/rentBillDetail',component: resolve => require(['../page/rent/rentBill/rentBillDetail.vue'], resolve)},
     {path: '/rentReceipt',component: resolve => require(['../page/rent/rentBill/rentReceipt.vue'], resolve)},
+
+    //租房-房屋管理
+    {path: '/rentHouse',component: resolve => require(['../page/rent/rentHouse/rentHouse.vue'], resolve)},
+    {path: '/rentHouseModify',component: resolve => require(['../page/rent/rentHouse/rentHouseModify.vue'], resolve)},
+    {path: '/rentHouseDetail',component: resolve => require(['../page/rent/rentHouse/rentHouseDetail.vue'], resolve)},
+    {path: '/rentHouseList',component: resolve => require(['../page/rent/rentHouse/rentHouseList.vue'], resolve)},
+
   ]
 })
 

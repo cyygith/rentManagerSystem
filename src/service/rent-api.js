@@ -31,12 +31,12 @@ const groupApi = {
 
 
 /**
- * 房屋管理模块
+ * house管理模块
  */
 const houseApi = {
   // list
   list (params) {
-    return axios.post(`${baseUrl}/rentHouse/getByExample`, params)
+    return axios.post(`${baseUrl}/rentHouse/list`, params)
   },
   // 删除
   deleteByIds (params) {
@@ -53,7 +53,15 @@ const houseApi = {
   // 详情
   detail (params) {
     return axios.post(`${baseUrl}/rentHouse/detail`, params)
-  }
+  },
+  // 查询
+  getByCondition (params) {
+    return axios.post(`${baseUrl}/rentHouse/getByCondition`, params)
+  },
+  // 保存或者更新
+  saveOrUpdate (params) {
+    return axios.post(`${baseUrl}/rentHouse/saveOrUpdate`, params)
+  },
 }
 /**
  * 房客管理模块
