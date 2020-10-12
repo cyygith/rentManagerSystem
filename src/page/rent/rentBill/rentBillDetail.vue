@@ -2,6 +2,7 @@
     <div class="bill-panel">
         <div class="head-panel">
             <button @click="backBefore"  class="btnclass head-back">< 返回</button>
+            <button class="btnclass head-save" @click="toReceipt">生成收据</button>
         </div>
         <div class="content-panel">
             <div class="c-item">
@@ -149,6 +150,27 @@ export default {
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');
+                }
+                loading.close();
+            });	
+        },
+        //生成房屋收据
+        toReceipt(item,value){
+            let id = this.$route.query.id;
+            let param = new URLSearchParams();
+            param.append("id",id);
+            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            billApi.getPdf(param).then((res)=>{
+                if(res.code == "0"){
+                    this.$message({
+                        message: '生成成功',
+                        center: true,
+                        type: 'success',
+                        customClass:'customClass',
+                        offset:300
+                    })
+                }else{
+                    this.$alert('提交失败，请联系管理员处理',res.msg);
                 }
                 loading.close();
             });	

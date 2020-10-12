@@ -3,15 +3,23 @@
         <div class="head-panel">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
             <button @click="houseDetail" class="btnclass head-save">查看</button>
-            <button @click="addHouse" class="btnclass head-save">新增</button>
         </div>
         <div class="content-panel">
             <div class="c-g-group" v-for="(val,key) in resulMap" :key="key">
                 <div class="gg-item"> 
                     {{key}}
                 </div>
-                <div class="c-group">
-                    <span @click="toRent(item);" :class="{'c-g-item-this':chooseSpan==item.houseCode}" class="c-g-item" v-for="(item) in val" :key="item.houseCode">{{item.houseName}}</span>
+                <div class="m-group">
+                    <template v-for="(item) in val">
+                        <div :key="item.houseCode">
+                            <div :class="[setClass(item),{'chooseDiv':chooseSpan==item.houseCode}]"   class="m-m-div"  @click="selectHoust(item);">
+                                <span class="m-m-m-span" >{{item.houseName}}</span>
+                                <div class="m-m-m-div">{{item.allCount}}
+                                    ({{item.leftDays===''?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
+                                </div>	
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
@@ -53,6 +61,19 @@ export default {
         backBefore(){
             this.$router.back(-1);
         },
+        setClass(item){
+            let leftDays = item.leftDays;
+            if(leftDays===''){
+                return 'greyBill';
+            }else if(leftDays<0||leftDays===0){
+                return 'redBill';
+            }else if(leftDays>0&&leftDays<3){
+                return 'orangeBill';
+            }else {
+                return 'greenBill';
+            }
+            
+        },
         // 获取详情  getListByGroup
         detail(){
             let idd = this.$route.query.id;
@@ -74,17 +95,14 @@ export default {
 
         //修改
         houseDetail(){
-            this.$router.push({path:'rentHouse',query:{type:'rentHouse',houseCode:this.chooseItem.houseCode}});
+            this.$router.push({path:'rentBillList',query:{houseCode:this.chooseItem.houseCode}});
         },
-        //新增
-        addHouse(){
-            this.$router.push({path:'rentHouseModify',query:{type:'rentHouseModify',ifNew:true}});
-        },
-        //选中收租情况
-        toRent(item){
+        //选中房间
+        selectHoust(item){
             this.chooseSpan = item.houseCode;
             this.chooseItem = item;
-        },
+            //this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
+        }
     }
 }
 </script>
@@ -102,11 +120,30 @@ export default {
             padding-bottom: 1rem;
             border-bottom: 1px solid rgb(167, 165, 165);
         }
-        .hh-item{
-            padding: 1rem;
-
+    .m-group{
+        display:flex;
+        flex-wrap:wrap;
+        padding:0.5rem;
+    }
+        .m-m-div{
+            padding:0.3rem;
+            margin-right:1rem;
+            margin-bottom:0.5rem;
+            text-align:center;	
+            border: 1px solid grey;
         }
+            .m-m-m-div{
+                font-size:0.5rem;
+            }
 }
+.foot-panel{
+    margin-top: 5rem;
+}
+//选中样式
+.chooseDiv{
+	transform: scale(1.1);
+	box-shadow: 0px 0px 18px rgba(0,0,0,0.5)
+} 
 .redBill{background-color:red;}
 .orangeBill{background-color:orange;}
 .greenBill{background-color:green;}

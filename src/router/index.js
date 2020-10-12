@@ -62,6 +62,7 @@ let router = new Router({
           meta: { title: '我的' }
         },
         {path: '/function',component: resolve => require(['../page/rent/function/function.vue'], resolve),meta: { title: '功能' }},
+        {path: '/monitor',component: resolve => require(['../page/rent/monitor/monitor.vue'], resolve),meta: { title: '监控' }},
       ]
     },
     //租房-账单管理
@@ -70,6 +71,7 @@ let router = new Router({
     {path: '/rentBillModify',component: resolve => require(['../page/rent/rentBill/rentBillModify.vue'], resolve)},
     {path: '/rentBillDetail',component: resolve => require(['../page/rent/rentBill/rentBillDetail.vue'], resolve)},
     {path: '/rentReceipt',component: resolve => require(['../page/rent/rentBill/rentReceipt.vue'], resolve)},
+    {path: '/rentBillList',component: resolve => require(['../page/rent/rentBill/rentBillList.vue'], resolve)},
 
     //租房-房屋管理
     {path: '/rentHouse',component: resolve => require(['../page/rent/rentHouse/rentHouse.vue'], resolve)},

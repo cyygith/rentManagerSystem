@@ -159,6 +159,10 @@ const billApi = {
   monitorRentEndTime (params) {
     return axios.post(`${baseUrl}/rentBill/monitorRentEndTime`, params)
   },
+  //生成收据
+  getPdf (params) {
+    return axios.post(`${baseUrl}/rentBill/getPdf`, params)
+  },
 }
 
 export {

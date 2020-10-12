@@ -74,7 +74,7 @@ export default {
 
         //修改
         houseDetail(){
-            this.$router.push({path:'rentHouse',query:{type:'rentHouse',houseCode:this.chooseItem.houseCode}});
+            this.$router.push({path:'rentHouse',query:{type:'rentHouse',id:this.chooseItem.id,houseCode:this.chooseItem.houseCode}});
         },
         //新增
         addHouse(){

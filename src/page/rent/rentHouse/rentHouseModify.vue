@@ -6,9 +6,6 @@
         </div>
         <div class="content-panel">
             <div class="c-item" v-if="ifNew||showItem==='houseCode'">
-                <input type="number" placeholder="testtest"  class="c-input" name="houseCode" v-model="form.houseCode">
-            </div>
-            <div class="c-item" v-if="ifNew||showItem==='houseCode'">
                 <input type="number" placeholder="请输入房屋编号"  class="c-input" name="houseCode" v-model="form.houseCode">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='houseName'"> 
@@ -64,19 +61,18 @@ export default {
         }
     },
     computed:{
-        displayItem:function(item){
-            console.log(item);
-            console.log("是否未新："+ this.ifNew);
-            return this.ifNew;
-        }
+        
     },
     mounted(){
-        this.detail();
         this.id = this.$route.query.id;
         this.form.id = this.$route.query.id;
         this.showItem = this.$route.query.showItem;
         this.form[this.showItem] = this.$route.query.showItemValue;
         this.ifNew = this.$route.query.ifNew;
+        if(!this.ifNew){ //如果不是新的，则查询
+            this.detail();
+        }
+        
     },
     watch:{
     
@@ -94,9 +90,9 @@ export default {
         detail(){
             let ID = this.$route.query.ID;
             let param = new URLSearchParams();
-            param.append("ID",ID);
+            param.append("id",ID);
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
-            houseApi.getByCondition(param).then((res)=>{
+            houseApi.detail(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){    
                         this.form = res.data;

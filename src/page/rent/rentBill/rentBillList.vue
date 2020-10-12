@@ -1,19 +1,22 @@
 <template>
     <div class="billlist-panel">
         <div class="head-panel">
-            <button class="btnclass head-back">< 退回</button>
+            <button @click="backBefore" class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex">
-            <div class="c-img">{{tItem.houseCode}}</div>
-            <div class="c-other" @click="toDetail(tItem)">
-                <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
-                <div class="cc-content">
-                    <span class="ccc-time">{{tItem.startTime}}-{{tItem.endTime}}</span> 
-                    <span class="ccc-money">{{tItem.money}}元</span>
+        <!--详细列表信息-->
+        <div class="center-content">
+            <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex">
+                <div class="c-img">{{tItem.houseName}}</div>
+                <div class="c-other" @click="toDetail(tItem)">
+                    <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
+                    <div class="cc-content">
+                        <span class="ccc-time">{{tItem.startTime}}-{{tItem.endTime}}</span> 
+                        <span class="ccc-money">{{tItem.money}}元</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="load-more">加载更多...</div>
+        <div class="load-more" v-if="this.page.totalCount>this.page.pageSize" @click="nextPage">加载更多...</div>
     </div>
 </template>
 
@@ -91,12 +94,14 @@ export default {
             let param = new URLSearchParams();
             param.append("page",this.page.currPage);
             param.append("size",this.page.pageSize);
+            param.append("houseCode",houseCode);
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
             billApi.list(param).then((res)=>{
                 if(res.code == "0"){
                   this.tableData = res.data.list;
                   this.page.pageSize = res.data.pageSize;
                   this.page.totalCount = res.data.total;
+                  console.log("总共几条："+res.data.total);
                 }else{
                   this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
                   //this.$alert('获取信息失败，联系管理员','提示信息');
@@ -111,38 +116,46 @@ export default {
 <style lang="scss" scoped>
 @import '../common/commonstyle.css';
 .billlist-panel{
-    background-color: grey;
     position: relative;
-    .c-item{
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        padding: 1rem;
-        background-color: white;
-        border-bottom: 1px solid rgb(214, 210, 210);
-    }
-        .cc-name{
-            width: 5rem;
-        }
-        .cc-value{
-            flex-grow: 1;
-            text-align: right;  
-            margin-right: 2rem;
-        }
-            .ccc-span{
-                font-weight: bold;
-                margin-left: 0.5rem;
+    /****下面是列表css*****/
+    .center-content{
+        background-color: rgb(241, 238, 238);
+        .content-panel{
+            background-color: white;
+            padding: 0.5rem;
+            margin: 0.5rem;
+            line-height: 1.5rem;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }   
+            .c-img{
+                padding: 1rem;
+                background-color: lightgreen;
+                border-radius: 50%;
+                margin-right: 1rem;
             }
-        .cc-amount{
-            color: red;
-            font-size: 1.3rem;
+            .c-other{
+                flex-grow: 1;
+                margin-right: 2rem;
+            }
+                    .ccc-time{
+                        font-size: 0.7rem;
+                        color: grey;
+                        
+                    }
+                    .ccc-money{
+                        float: right;
+                        color: blue;
+                        
+                    }
+        .foot-panel{
+            padding: 0.3rem;
         }
-    .smallsize{
-        size: 0.5rem;
-        color:grey;
-    }
-    .load-more{
-    	text-align:center;
     }
 }
+.load-more{
+    text-align:center;
+}
+
 </style>

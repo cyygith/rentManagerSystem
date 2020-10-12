@@ -2,6 +2,7 @@
     <div class="bill-panel">
         <div class="head-panel">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
+            <button class="btnclass head-save" @click="save">完成</button>
             <button class="btnclass head-save" @click="toReceipt">生成收据</button>
         </div>
         <div class="content-panel">
@@ -141,7 +142,29 @@ export default {
         toEdit(item,value){
             this.$router.push({path:'rentBillModify',query:{id:this.form.id,showItem:item,showItemValue:value,houseCode:this.form.houseCode}});
         },
-        //生成房屋收据
+        //完成
+        save(item,value){
+            let param = {
+                id:this.form.id,
+                sum:this.form.sum,
+                status:'1'
+            };
+            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            billApi.saveOrUpdate(param).then((res)=>{
+                if(res.code == "0"){
+                    this.$message({
+                        message: '生成成功',
+                        center: true,
+                        type: 'success',
+                        customClass:'customClass',
+                        offset:300
+                    })
+                }else{
+                    this.$alert('提交失败，请联系管理员处理','提示信息');
+                }
+                loading.close();
+            });	
+        },
         toReceipt(item,value){
             // this.$router.push({path:'rentReceipt',query:{id:this.form.id}});
             let param = {
@@ -149,10 +172,8 @@ export default {
                 sum:this.form.sum,
                 status:'1'
             };
-            console.log("c参数是多少");
-            console.dir(param);
             let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
-            billApi.saveOrUpdate(param).then((res)=>{
+            billApi.getPdf(param).then((res)=>{
                 if(res.code == "0"){
                     this.$message({
                         message: '生成成功',
