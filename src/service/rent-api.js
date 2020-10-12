@@ -155,6 +155,10 @@ const billApi = {
   doRent (params) {
     return axios.post(`${baseUrl}/rentBill/doRent`, params)
   },
+  //监控收租情况
+  monitorRentEndTime (params) {
+    return axios.post(`${baseUrl}/rentBill/monitorRentEndTime`, params)
+  },
 }
 
 export {

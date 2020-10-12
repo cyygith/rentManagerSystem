@@ -5,31 +5,34 @@
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
         <div class="content-panel">
-            <div class="c-item" v-if="showItem=='houseCode'">
+            <div class="c-item" v-if="ifNew||showItem==='houseCode'">
+                <input type="number" placeholder="testtest"  class="c-input" name="houseCode" v-model="form.houseCode">
+            </div>
+            <div class="c-item" v-if="ifNew||showItem==='houseCode'">
                 <input type="number" placeholder="请输入房屋编号"  class="c-input" name="houseCode" v-model="form.houseCode">
             </div>
-            <div class="c-item" v-if="ifNew|showItem=='houseName'"> 
+            <div class="c-item" v-if="ifNew||showItem==='houseName'"> 
                 <input type="number" placeholder="请输入房屋名称"  class="c-input" name="houseName" v-model="form.houseName">
             </div>
-            <div class="c-item" v-if="showItem=='groupCode'">
+            <div class="c-item" v-if="ifNew||showItem==='groupCode'">
                 <input type="number" placeholder="请输入房组编号"  class="c-input" name="groupCode" v-model="form.groupCode">
             </div>
-            <div class="c-item" v-if="showItem=='houseAddress'">
+            <div class="c-item" v-if="ifNew||showItem==='houseAddress'">
                 <input type="number" placeholder="请输入房屋地址"  class="c-input" name="houseAddress" v-model="form.houseAddress">
             </div>
-            <div class="c-item" v-if="showItem=='houseArea'">
+            <div class="c-item" v-if="ifNew||showItem==='houseArea'">
                 <input type="number" placeholder="请输入面积"  class="c-input" name="houseArea" v-model="form.houseArea">
             </div>
-            <div class="c-item" v-if="showItem=='housePrice'">
+            <div class="c-item" v-if="ifNew||showItem==='housePrice'">
                 <input type="number" placeholder="请输入租金"  class="c-input" name="housePrice" v-model="form.housePrice">
             </div>
-            <div class="c-item" v-if="showItem=='status'">
+            <div class="c-item" v-if="ifNew||showItem==='status'">
                 <input type="number" placeholder="请输入状态"  class="c-input" name="status" v-model="form.status">
             </div>
-            <div class="c-item" v-if="showItem=='orderNum'">
+            <div class="c-item" v-if="ifNew||showItem==='orderNum'">
                 <input type="number" placeholder="请输入排序号"  class="c-input" name="orderNum" v-model="form.orderNum">
             </div>
-            <div class="c-item" v-if="showItem=='remark'">
+            <div class="c-item" v-if="ifNew||showItem==='remark'">
                 <input type="number" placeholder="请输入备注"  class="c-input" name="remark" v-model="form.remark">
             </div>
         </div>
@@ -61,7 +64,11 @@ export default {
         }
     },
     computed:{
-
+        displayItem:function(item){
+            console.log(item);
+            console.log("是否未新："+ this.ifNew);
+            return this.ifNew;
+        }
     },
     mounted(){
         this.detail();
