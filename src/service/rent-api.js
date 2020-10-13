@@ -8,7 +8,7 @@ import axios from './http'
 const groupApi = {
   // list
   list (params) {
-    return axios.post(`${baseUrl}/rentGroup/getByExample`, params)
+    return axios.post(`${baseUrl}/rentGroup/list`, params)
   },
   // 删除
   deleteByIds (params) {
@@ -41,6 +41,10 @@ const houseApi = {
   // 删除
   deleteByIds (params) {
     return axios.post(`${baseUrl}/rentHouse/deleteByIds`, params)
+  },
+  // 删除
+  delete (params) {
+    return axios.post(`${baseUrl}/rentHouse/delete`, params)
   },
   // 保存
   save (params) {
@@ -159,9 +163,25 @@ const billApi = {
   monitorRentEndTime (params) {
     return axios.post(`${baseUrl}/rentBill/monitorRentEndTime`, params)
   },
-  //生成收据
+  //生成收据  return axios.post(`${baseUrl}/rentBill/getPdf`, params)
   getPdf (params) {
-    return axios.post(`${baseUrl}/rentBill/getPdf`, params)
+    // return axios.post(`${baseUrl}/rentBill/getPdf`, params)
+    return  axios({
+      url: `${baseUrl}/rentBill/getPdf`,
+      timeout: 30000, // 请求超时时间10s
+      headers: {
+      //'Content-Type': 'application/x-zip-compressed',
+        'Authorization': token,
+      },
+      xhrFields: {
+        withCredentials: true
+      },
+      method:'post',
+      data:param,
+      responseType: 'blob',
+  });
+
+
   },
 }
 

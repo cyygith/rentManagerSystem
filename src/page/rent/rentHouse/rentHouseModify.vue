@@ -6,44 +6,57 @@
         </div>
         <div class="content-panel">
             <div class="c-item" v-if="ifNew||showItem==='houseCode'">
-                <input type="number" placeholder="请输入房屋编号"  class="c-input" name="houseCode" v-model="form.houseCode">
+                <div>房屋编号:</div>
+                <div>
+                    <input  placeholder="请输入房屋编号"  class="c-input" name="houseCode" v-model="form.houseCode">
+                </div>
+                
             </div>
             <div class="c-item" v-if="ifNew||showItem==='houseName'"> 
-                <input type="number" placeholder="请输入房屋名称"  class="c-input" name="houseName" v-model="form.houseName">
+                <div>房屋名称:</div>
+                <input  placeholder="请输入房屋名称"  class="c-input" name="houseName" v-model="form.houseName">
             </div>
-            <div class="c-item" v-if="ifNew||showItem==='groupCode'">
-                <input type="number" placeholder="请输入房组编号"  class="c-input" name="groupCode" v-model="form.groupCode">
+            <div class="c-group c-item">
+                <div>房组编号:{{form.groupCode}}</div>
+                <span v-for='(tItem,tIndex) in groups' :key="tIndex" class="c-g-item" @click="changeGroup(tItem);" :class="{'c-g-item-this':form.groupCode==tItem.groupCode}">{{tItem.groupName}}</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='houseAddress'">
-                <input type="number" placeholder="请输入房屋地址"  class="c-input" name="houseAddress" v-model="form.houseAddress">
+                <div>房屋地址:</div>
+                <input  placeholder="请输入房屋地址"  class="c-input" name="houseAddress" v-model="form.houseAddress">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='houseArea'">
-                <input type="number" placeholder="请输入面积"  class="c-input" name="houseArea" v-model="form.houseArea">
+                <div>房屋面积:</div>
+                <input type="number"  placeholder="请输入面积"  class="c-input" name="houseArea" v-model="form.houseArea">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='housePrice'">
-                <input type="number" placeholder="请输入租金"  class="c-input" name="housePrice" v-model="form.housePrice">
+                <div>租金:</div>
+                <input type="number"  placeholder="请输入租金"  class="c-input" name="housePrice" v-model="form.housePrice">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='status'">
-                <input type="number" placeholder="请输入状态"  class="c-input" name="status" v-model="form.status">
+                <div>状态:</div>
+                <span class="c-g-item" @click="changeStatus('1');" :class="{'c-g-item-this':form.status=='1'}">启用</span>
+                <span class="c-g-item" @click="changeStatus('0');" :class="{'c-g-item-this':form.status=='0'}">禁用</span>
             </div>
-            <div class="c-item" v-if="ifNew||showItem==='orderNum'">
-                <input type="number" placeholder="请输入排序号"  class="c-input" name="orderNum" v-model="form.orderNum">
-            </div>
+            <!-- <div class="c-item" v-if="ifNew||showItem==='orderNum'">
+                <div>排序号:</div>
+                <input  placeholder="请输入排序号"  class="c-input" name="orderNum" v-model="form.orderNum">
+            </div> -->
             <div class="c-item" v-if="ifNew||showItem==='remark'">
-                <input type="number" placeholder="请输入备注"  class="c-input" name="remark" v-model="form.remark">
+                <div>备注:</div>
+                <textarea placeholder="请输入备注" rows="5" class="c-textarea" name="remark" v-model="form.remark"></textarea>
             </div>
         </div>
     </div>
 </template>
 <script>
-import {houseApi} from "@/service/rent-api";
+import {houseApi,groupApi} from "@/service/rent-api";
 export default {
     data() {
         return {
             id:'',
             form:{
             	id:null,
-            	houseCode:null,
+            	houseCode:'H0',
             	houseName:null,
             	groupCode:null,
             	houseAddress:null,
@@ -57,7 +70,13 @@ export default {
             },
             ifNew:false, //是否为新增，如果新增，则不加一个个过滤
             showItem:'',
-            showItemValue:''
+            showItemValue:'',
+            groups:[{'groupName':'17号房组'},{'groupName':'94号房组'}],
+            page:{
+            	pageSize:10,
+            	currPage:1,
+            	totalPage:0
+            },
         }
     },
     computed:{
@@ -69,13 +88,13 @@ export default {
         this.showItem = this.$route.query.showItem;
         this.form[this.showItem] = this.$route.query.showItemValue;
         this.ifNew = this.$route.query.ifNew;
+        this.getGroup();//获取组别情况
         if(!this.ifNew){ //如果不是新的，则查询
             this.detail();
         }
-        
     },
     watch:{
-    
+        
     },
     methods:{
         // 退出登录
@@ -85,6 +104,13 @@ export default {
         //返回上一页
         backBefore(){
             this.$router.back(-1);
+        },
+        changeGroup(item){
+            console.dir(item);
+            this.form.groupCode = item.groupCode;
+        },
+        changeStatus(val){
+            this.form.status = val;
         },
         // 获取详情
         detail(){
@@ -101,6 +127,23 @@ export default {
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
                 loading.close();
+            });	
+        },
+        //获取组别情况
+        getGroup(){
+            let param = new URLSearchParams();
+            param.append("page",this.page.currPage);
+            param.append("size",this.page.pageSize);
+            groupApi.list(param).then((res)=>{
+                console.log("获取组别情况");
+                console.dir(res.data);
+                if(res.code == "0"){
+                    this.groups = res.data.list;
+                    this.page.pageSize = res.data.pageSize;
+                    this.page.totalCount = res.data.total;
+                }else{
+                    this.$alert('获取组别信息失败，联系管理员','提示信息');
+                }
             });	
         },
         //保存到数据库
@@ -134,8 +177,9 @@ export default {
     background-color: grey;
     position: relative;
     .c-item{
-        display: flex;
-        flex-direction: row;
+        // display: flex;
+        // flex-direction: row;
+        line-height: 2rem;
         width: 100%;
         padding: 1rem;
         background-color: white;

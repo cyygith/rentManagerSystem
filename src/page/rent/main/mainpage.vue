@@ -141,7 +141,8 @@ export default {
                 console.log('abccccc');
                 console.dir(res);
                 if(res.code == "0"){
-                  this.tableData = res.data.list;
+                //   this.tableData = res.data.list;
+                  this.tableData.push.apply(this.tableData,res.data.list);
                   this.page.pageSize = res.data.pageSize;
                   this.page.totalCount = res.data.total;
                 }else{
@@ -227,10 +228,10 @@ export default {
     position: absolute;
     left: 0;
     right: 0;
-    top: 10%;
+    top: 12%;
     bottom: 8%;
     overflow: auto;
-    padding: 1rem 0;
+    padding: 0;
     .center-content{
         position: relative;
     }

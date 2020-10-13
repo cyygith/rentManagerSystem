@@ -102,6 +102,7 @@
     bottom: 0;
     right: 0;
     left: 0;
+    background-color: white;
     border-top: 1px solid rgb(224, 224, 224);
     .f-content{
         width: 100%;

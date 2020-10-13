@@ -4,6 +4,7 @@
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
             <button @click="houseDetail" class="btnclass head-save">查看</button>
             <button @click="addHouse" class="btnclass head-save">新增</button>
+            <button @click="delHouse" class="btnclass head-save">删除</button>
         </div>
         <div class="content-panel">
             <div class="c-g-group" v-for="(val,key) in resulMap" :key="key">
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import {billApi} from "@/service/rent-api";
+import {billApi,houseApi} from "@/service/rent-api";
 export default {
     data() {
         return {
@@ -85,6 +86,36 @@ export default {
             this.chooseSpan = item.houseCode;
             this.chooseItem = item;
         },
+        //删除
+        delHouse() {
+            this.$confirm('确定删除该记录?', '提示', {confirmButtonText: '确定',cancelButtonText: '取消',type: 'warning'}).then(() => {
+                let param = new URLSearchParams();
+                param.append("id",this.chooseItem.id);
+                console.log("delete  item...."+this.chooseItem.id);
+                houseApi.delete(param).then(res => {
+                    if (res.code == "0") {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!',
+                            duration: 2000
+                        });
+                        this.detail();
+                    }else{
+                        this.$message({
+                            type: 'error',
+                            message: '删除失败，联系管理员',
+                            duration: 2000
+                        });
+                    }
+                });
+            }).catch((e) => {
+                console.dir(e);
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });   
+        }
     }
 }
 </script>

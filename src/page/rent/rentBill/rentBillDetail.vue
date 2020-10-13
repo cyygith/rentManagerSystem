@@ -136,13 +136,9 @@ export default {
             let id = this.$route.query.id;
             let param = new URLSearchParams();
             param.append("id",id);
-            console.log("param....");
-            console.dir(id);
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
             billApi.getByCondition(param).then((res)=>{
                 if(res.code == "0"){
-                    console.log("rentBillDetail.....");
-                    console.dir(res.data);
                     if(res.data){    
                         this.form = res.data;
                         this.form.waterPayTypeName = this.waterPayTypeArr[res.data.waterPayType];
@@ -159,20 +155,35 @@ export default {
             let id = this.$route.query.id;
             let param = new URLSearchParams();
             param.append("id",id);
-            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
-            billApi.getPdf(param).then((res)=>{
-                if(res.code == "0"){
-                    this.$message({
-                        message: '生成成功',
-                        center: true,
-                        type: 'success',
-                        customClass:'customClass',
-                        offset:300
-                    })
-                }else{
-                    this.$alert('提交失败，请联系管理员处理',res.msg);
+            // let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            billApi.getPdf(param).then(x => {   //
+                console.log("finally here....");
+                console.dir(x);
+                if (x.status == 200) {
+                    vm.dialogExportOrder = false;
+                    const content = x.data;
+                    const blob = new Blob([content])
+                    const fileName = '房组收据.pdf';  //自定义下载文件的名字
+                    if ('download' in document.createElement('a')) { // 非IE下载
+                        const elink = document.createElement('a');
+                        elink.download = fileName;
+                        elink.style.display = 'none';
+                        elink.href = URL.createObjectURL(blob);
+                        document.body.appendChild(elink);
+                        elink.click();
+                        URL.revokeObjectURL(elink.href); // 释放URL 对象
+                        document.body.removeChild(elink);
+                    } else { // IE10+下载
+                        navigator.msSaveBlob(blob, fileName);
+                    }
                 }
-                loading.close();
+            }).catch(function(error){
+            	console.log(error.response)   //可获取错误的返回信息
+                if (error.response.status==400) {
+                    
+                }
+            }).finally(() => {
+            
             });	
         },
     }

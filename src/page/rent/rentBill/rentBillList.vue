@@ -98,7 +98,8 @@ export default {
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
             billApi.list(param).then((res)=>{
                 if(res.code == "0"){
-                  this.tableData = res.data.list;
+                //   this.tableData = res.data.list;
+                  this.tableData.push.apply(this.tableData,res.data.list);
                   this.page.pageSize = res.data.pageSize;
                   this.page.totalCount = res.data.total;
                   console.log("总共几条："+res.data.total);
