@@ -16,7 +16,7 @@
                 <div>房屋名称:</div>
                 <input  placeholder="请输入房屋名称"  class="c-input" name="houseName" v-model="form.houseName">
             </div>
-            <div class="c-group c-item">
+            <div class="c-group c-item" v-if="ifNew||showItem==='groupCode'">
                 <div>房组编号:{{form.groupCode}}</div>
                 <span v-for='(tItem,tIndex) in groups' :key="tIndex" class="c-g-item" @click="changeGroup(tItem);" :class="{'c-g-item-this':form.groupCode==tItem.groupCode}">{{tItem.groupName}}</span>
             </div>
@@ -114,7 +114,7 @@ export default {
         },
         // 获取详情
         detail(){
-            let ID = this.$route.query.ID;
+            let ID = this.$route.query.id;
             let param = new URLSearchParams();
             param.append("id",ID);
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
