@@ -78,6 +78,12 @@ let router = new Router({
     {path: '/rentHouseModify',component: resolve => require(['../page/rent/rentHouse/rentHouseModify.vue'], resolve)},
     {path: '/rentHouseDetail',component: resolve => require(['../page/rent/rentHouse/rentHouseDetail.vue'], resolve)},
     {path: '/rentHouseList',component: resolve => require(['../page/rent/rentHouse/rentHouseList.vue'], resolve)},
+    
+    //租房-房组管理
+    {path: '/rentGroup',component: resolve => require(['../page/rent/rentGroup/rentGroup.vue'], resolve)},
+    {path: '/rentGroupModify',component: resolve => require(['../page/rent/rentGroup/rentGroupModify.vue'], resolve)},
+    {path: '/rentGroupDetail',component: resolve => require(['../page/rent/rentGroup/rentGroupDetail.vue'], resolve)},
+    {path: '/rentGroupList',component: resolve => require(['../page/rent/rentGroup/rentGroupList.vue'], resolve)},
 
   ]
 })

@@ -3,16 +3,20 @@ import axios from './http'
 
 
 /**
- * 房组管理模块
+ * group管理模块
  */
 const groupApi = {
   // list
   list (params) {
     return axios.post(`${baseUrl}/rentGroup/list`, params)
   },
-  // 删除
+  // 删除(多条)
   deleteByIds (params) {
     return axios.post(`${baseUrl}/rentGroup/deleteByIds`, params)
+  },
+  // 删除
+  delete (params) {
+    return axios.post(`${baseUrl}/rentGroup/delete`, params)
   },
   // 保存
   save (params) {
@@ -26,7 +30,14 @@ const groupApi = {
   detail (params) {
     return axios.post(`${baseUrl}/rentGroup/detail`, params)
   },
-  
+  // 查询
+  getByCondition (params) {
+    return axios.post(`${baseUrl}/rentGroup/getByCondition`, params)
+  },
+  // 保存或者更新
+  saveOrUpdate (params) {
+    return axios.post(`${baseUrl}/rentGroup/saveOrUpdate`, params)
+  },
 }
 
 
