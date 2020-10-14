@@ -6,22 +6,22 @@
             <button @click="add" class="btnclass head-save">新增</button>
             <button @click="del" class="btnclass head-save">删除</button>
         </div>
-        <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex">
-            <div class="c-img">{{tItem.houseCode}}</div>
-            <div class="c-other" @click="toDetail(tItem)">
+        <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex" :class="[{'chooseDiv':chooseDiv==tItem.id}]" @click="choose(tItem);">
+            <div class="c-img" @click="toDetail(tItem)">{{tItem.groupCode}}</div>
+            <div class="c-other" >
                 <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
                 <div class="cc-content">
-                    <span class="ccc-time">{{tItem.startTime}}-{{tItem.endTime}}</span> 
-                    <span class="ccc-money">{{tItem.money}}元</span>
+                    <span class="ccc-time">{{tItem.groupAddress}}</span> 
+                    <span class="ccc-money">{{tItem.status==='1'?'启用':'禁用'}}</span>
                 </div>
             </div>
         </div>
-        <div class="load-more">加载更多...</div>
+        <div class="load-more" v-if="this.page.totalCount>this.page.pageSize">加载更多...</div>
     </div>
 </template>
 
 <script>
-import {groupApi} from "@/service/group-api";
+import {groupApi} from "@/service/rent-api";
 export default {
     data() {
         return {
@@ -44,6 +44,7 @@ export default {
             	currPage:1,
             	totalPage:0
             },
+            chooseDiv:'',
         }
     },
     computed:{
@@ -71,6 +72,12 @@ export default {
         lastPage(){
         	this.page.currPage = this.page.currPage-1;
             this.queryList();
+        },
+        //选中div
+        choose(item){
+            this.chooseDiv = item.id;
+            this.chooseItem = item;
+            //this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
         },
         //编辑详情
         toDetail(item){
@@ -115,7 +122,7 @@ export default {
                             message: '删除成功!',
                             duration: 2000
                         });
-                        this.detail();
+                        this.queryList();
                     }else{
                         this.$message({
                             type: 'error',
@@ -176,4 +183,9 @@ export default {
     	text-align:center;
     }
 }
+//选中样式
+.chooseDiv{
+	transform: scale(1.01);
+	box-shadow: 0px 0px 18px rgba(0,0,0,0.5)
+} 
 </style>

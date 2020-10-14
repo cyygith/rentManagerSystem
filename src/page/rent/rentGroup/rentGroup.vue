@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-import {groupApi} from "@/service/group-api";
+import {groupApi} from "@/service/rent-api";
 export default {
     data() {
         return {
@@ -83,13 +83,13 @@ export default {
         },
         //编辑详情
         toEdit(item,value){
-            this.$router.push({path:'groupModify',query:{id:this.form.id,showItem:item,showItemValue:value}});
+            this.$router.push({path:'rentGroupModify',query:{id:this.form.id,showItem:item,showItemValue:value}});
         },
         // 获取详情
         detail(){
-            let ID = this.$route.query.ID;
+            let ID = this.$route.query.id;
             let param = new URLSearchParams();
-            param.append("ID",ID);
+            param.append("id",ID);
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
             groupApi.getByCondition(param).then((res)=>{
                 if(res.code == "0"){

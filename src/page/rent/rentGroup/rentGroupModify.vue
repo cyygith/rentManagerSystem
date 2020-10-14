@@ -29,23 +29,11 @@
                 <div>备注:</div>
                 <input placeholder="请输入备注"  class="c-input" name="remark" v-model="form.remark">
             </div>
-            <div class="c-item" v-if="ifNew||showItem==='createTime'">
-                <div>创建时间:</div>
-                <input placeholder="请输入创建时间"  class="c-input" name="createTime" v-model="form.createTime">
-            </div>
-            <div class="c-item" v-if="ifNew||showItem==='updateTime'">
-                <div>更新时间:</div>
-                <input placeholder="请输入更新时间"  class="c-input" name="updateTime" v-model="form.updateTime">
-            </div>
-            <div class="c-item" v-if="ifNew||showItem==='tenantId'">
-                <div>实体ID:</div>
-                <input placeholder="请输入实体ID"  class="c-input" name="tenantId" v-model="form.tenantId">
-            </div>
         </div>
     </div>
 </template>
 <script>
-import {groupApi} from "@/service/group-api";
+import {groupApi} from "@/service/rent-api";
 export default {
     data() {
         return {
@@ -71,10 +59,12 @@ export default {
 
     },
     mounted(){
-        this.detail();
         this.showItem = this.$route.query.showItem;
         this.form[this.showItem] = this.$route.query.showItemValue;
         this.ifNew = this.$route.query.ifNew;
+        if(!this.ifNew){ //如果不是新的，则查询
+            this.detail();
+        }
     },
     watch:{
     
