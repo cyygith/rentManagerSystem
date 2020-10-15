@@ -66,11 +66,11 @@ export default {
         },
         //房客管理
         toPerson(item,value){
-            this.$router.push({path:'toPersonList',query:{}});
+            this.$router.push({path:'rentPersonList',query:{}});
         },
         //合同管理
         toContract(item,value){
-            this.$router.push({path:'toContractList',query:{}});
+            this.$router.push({path:'rentContractList',query:{}});
         },
         
     }

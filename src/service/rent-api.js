@@ -206,13 +206,13 @@ const billApi = {
       timeout: 30000, // 请求超时时间10s
       headers: {
       //'Content-Type': 'application/x-zip-compressed',
-        'Authorization': token,
+        'Authorization': '',//token orgin vaue  [token]
       },
       xhrFields: {
         withCredentials: true
       },
       method:'post',
-      data:param,
+      data:params,
       responseType: 'blob',
   });
 

@@ -92,10 +92,10 @@ let router = new Router({
     {path: '/rentPersonList',component: resolve => require(['../page/rent/rentPerson/rentPersonList.vue'], resolve)},
     
     //租房-合同管理
-    {path: '/rentContract',component: resolve => require(['../page/rent/rentContract/rentContract.vue'], resolve)},
-    {path: '/rentContractModify',component: resolve => require(['../page/rent/rentContract/rentContractModify.vue'], resolve)},
-    {path: '/rentContractDetail',component: resolve => require(['../page/rent/rentContract/rentContractDetail.vue'], resolve)},
-    {path: '/rentContractList',component: resolve => require(['../page/rent/rentContract/rentContractList.vue'], resolve)},
+    {path: '/rentContract',component: resolve => require(['../page/rent/rentConstract/rentContract.vue'], resolve)},
+    {path: '/rentContractModify',component: resolve => require(['../page/rent/rentConstract/rentContractModify.vue'], resolve)},
+    {path: '/rentContractDetail',component: resolve => require(['../page/rent/rentConstract/rentContractDetail.vue'], resolve)},
+    {path: '/rentContractList',component: resolve => require(['../page/rent/rentConstract/rentContractList.vue'], resolve)},
 
   ]
 })

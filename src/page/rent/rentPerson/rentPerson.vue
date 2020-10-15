@@ -52,18 +52,6 @@
                 <div class="cc-name">备注</div>
                 <div class="cc-value" @click="toEdit('remark',form.remark);">{{form.remark}}<span class="ccc-span">></span></div>
             </div>
-        	<div class="c-item">
-                <div class="cc-name">创建时间</div>
-                <div class="cc-value" @click="toEdit('createTime',form.createTime);">{{form.createTime}}<span class="ccc-span">></span></div>
-            </div>
-        	<div class="c-item">
-                <div class="cc-name">更新时间</div>
-                <div class="cc-value" @click="toEdit('updateTime',form.updateTime);">{{form.updateTime}}<span class="ccc-span">></span></div>
-            </div>
-        	<div class="c-item">
-                <div class="cc-name">实体ID</div>
-                <div class="cc-value" @click="toEdit('tenantId',form.tenantId);">{{form.tenantId}}<span class="ccc-span">></span></div>
-            </div>
         </div>
     </div>
 </template>

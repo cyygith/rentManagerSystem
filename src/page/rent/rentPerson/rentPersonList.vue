@@ -6,12 +6,12 @@
             <button @click="add" class="btnclass head-save">新增</button>
             <button @click="del" class="btnclass head-save">删除</button>
         </div>
-        <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex" :class="[{'chooseDiv':chooseDiv==tItem.id}]" @click="choose(tItem);">
-            <div class="c-img" @click="toDetail(tItem)">{{tItem.id}}</div>
+        <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex" :class="[{'chooseDiv':chooseDiv===tItem.id}]" @click="choose(tItem);">
+            <div class="c-img" @click="toDetail(tItem)">{{tItem.personCode}}</div>
             <div class="c-other">
-                <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
+                <div class="cc-room">{{tItem.identAddr}} {{tItem.personName}}</div>
                 <div class="cc-content">
-                    <span class="ccc-time">{{tItem.groupAddress}}</span> 
+                    <span class="ccc-time">{{tItem.tel}}</span> 
                     <span class="ccc-money">{{tItem.status==='1'?'启用':'禁用'}}</span>
                 </div>
             </div>
@@ -50,6 +50,7 @@ export default {
             	currPage:1,
             	totalPage:0
             },
+            chooseDiv:''
         }
     },
     computed:{
