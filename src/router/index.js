@@ -84,6 +84,18 @@ let router = new Router({
     {path: '/rentGroupModify',component: resolve => require(['../page/rent/rentGroup/rentGroupModify.vue'], resolve)},
     {path: '/rentGroupDetail',component: resolve => require(['../page/rent/rentGroup/rentGroupDetail.vue'], resolve)},
     {path: '/rentGroupList',component: resolve => require(['../page/rent/rentGroup/rentGroupList.vue'], resolve)},
+    
+    //租房-房客人管理
+    {path: '/rentPerson',component: resolve => require(['../page/rent/rentPerson/rentPerson.vue'], resolve)},
+    {path: '/rentPersonModify',component: resolve => require(['../page/rent/rentPerson/rentPersonModify.vue'], resolve)},
+    {path: '/rentPersonDetail',component: resolve => require(['../page/rent/rentPerson/rentPersonDetail.vue'], resolve)},
+    {path: '/rentPersonList',component: resolve => require(['../page/rent/rentPerson/rentPersonList.vue'], resolve)},
+    
+    //租房-合同管理
+    {path: '/rentContract',component: resolve => require(['../page/rent/rentContract/rentContract.vue'], resolve)},
+    {path: '/rentContractModify',component: resolve => require(['../page/rent/rentContract/rentContractModify.vue'], resolve)},
+    {path: '/rentContractDetail',component: resolve => require(['../page/rent/rentContract/rentContractDetail.vue'], resolve)},
+    {path: '/rentContractList',component: resolve => require(['../page/rent/rentContract/rentContractList.vue'], resolve)},
 
   ]
 })

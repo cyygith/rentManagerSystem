@@ -79,16 +79,20 @@ const houseApi = {
   },
 }
 /**
- * 房客管理模块
+ * person管理模块
  */
 const personApi = {
   // list
   list (params) {
-    return axios.post(`${baseUrl}/rentPerson/getByExample`, params)
+    return axios.post(`${baseUrl}/rentPerson/list`, params)
   },
-  // 删除
+  // 删除(多条)
   deleteByIds (params) {
     return axios.post(`${baseUrl}/rentPerson/deleteByIds`, params)
+  },
+  // 删除
+  delete (params) {
+    return axios.post(`${baseUrl}/rentPerson/delete`, params)
   },
   // 保存
   save (params) {
@@ -101,20 +105,32 @@ const personApi = {
   // 详情
   detail (params) {
     return axios.post(`${baseUrl}/rentPerson/detail`, params)
-  }
+  },
+  // 查询
+  getByCondition (params) {
+    return axios.post(`${baseUrl}/rentPerson/getByCondition`, params)
+  },
+  // 保存或者更新
+  saveOrUpdate (params) {
+    return axios.post(`${baseUrl}/rentPerson/saveOrUpdate`, params)
+  },
 }
 
 /**
- * 合同管理模块
+ * contract管理模块
  */
 const contractApi = {
   // list
   list (params) {
-    return axios.post(`${baseUrl}/rentContract/getByExample`, params)
+    return axios.post(`${baseUrl}/rentContract/list`, params)
   },
-  // 删除
+  // 删除(多条)
   deleteByIds (params) {
     return axios.post(`${baseUrl}/rentContract/deleteByIds`, params)
+  },
+  // 删除
+  delete (params) {
+    return axios.post(`${baseUrl}/rentContract/delete`, params)
   },
   // 保存
   save (params) {
@@ -127,7 +143,15 @@ const contractApi = {
   // 详情
   detail (params) {
     return axios.post(`${baseUrl}/rentContract/detail`, params)
-  }
+  },
+  // 查询
+  getByCondition (params) {
+    return axios.post(`${baseUrl}/rentContract/getByCondition`, params)
+  },
+  // 保存或者更新
+  saveOrUpdate (params) {
+    return axios.post(`${baseUrl}/rentContract/saveOrUpdate`, params)
+  },
 }
 
 /**

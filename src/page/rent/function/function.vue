@@ -14,11 +14,11 @@
             </div>
             <div class="c-item">
                 <div class="cc-name">租客管理</div>
-                <div class="cc-value" @click="toEdit('money',form.money);"><span class="ccc-span">></span></div>
+                <div class="cc-value" @click="toPerson('money',form.money);"><span class="ccc-span">></span></div>
             </div>
             <div class="c-item">
                 <div class="cc-name">合同管理</div>
-                <div class="cc-value" @click="toEdit('money',form.money);"><span class="ccc-span">></span></div>
+                <div class="cc-value" @click="toContract('money',form.money);"><span class="ccc-span">></span></div>
             </div>
 
         </div>
@@ -63,6 +63,14 @@ export default {
         //房屋管理
         toHouse(item,value){
             this.$router.push({path:'rentHouseList',query:{}});
+        },
+        //房客管理
+        toPerson(item,value){
+            this.$router.push({path:'toPersonList',query:{}});
+        },
+        //合同管理
+        toContract(item,value){
+            this.$router.push({path:'toContractList',query:{}});
         },
         
     }
