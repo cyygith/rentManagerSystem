@@ -85,7 +85,7 @@ export default {
                                 sessionStorage.setItem('access-token',res.data.token);
                                 // sessionStorage.setItem('roles',JSON.stringify(res.data.roles));
                                 sessionStorage.setItem('user',JSON.stringify(res.data.user));
-                                this.$router.push('/home');
+                                this.$router.push('/rentHome');
                             }else{
                                 this.$message({message:res.msg,type:'error'})
                             }

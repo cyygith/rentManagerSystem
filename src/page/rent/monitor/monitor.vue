@@ -1,10 +1,11 @@
 <template>
     <div class="housechoose-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
             <button @click="houseDetail" class="btnclass head-save">查看</button>
+            <button @click="takeRent" class="btnclass head-save">收租</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-g-group" v-for="(val,key) in resulMap" :key="key">
                 <div class="gg-item"> 
                     {{key}}
@@ -23,7 +24,6 @@
                 </div>
             </div>
         </div>
-        <div class="foot-panel"> </div>
     </div>
 </template>
 
@@ -78,7 +78,7 @@ export default {
         detail(){
             let idd = this.$route.query.id;
             let param = new URLSearchParams();
-            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            // let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
             billApi.monitorRentEndTime(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){
@@ -89,7 +89,7 @@ export default {
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
-                loading.close();
+                // loading.close();
             });	
         },
 
@@ -102,7 +102,11 @@ export default {
             this.chooseSpan = item.houseCode;
             this.chooseItem = item;
             //this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
-        }
+        },
+        //收租
+        takeRent(){
+            this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:this.chooseItem.groupName,houseName:this.chooseItem.houseName,houseCode:this.chooseItem.houseCode}});
+        },
     }
 }
 </script>

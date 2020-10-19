@@ -1,9 +1,9 @@
 <template>
     <div class="summary-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-item">
                 <div class="cc-name">房组管理</div>
                 <div class="cc-value" @click="toGroup"><span class="ccc-span">></span></div>
@@ -81,8 +81,6 @@ export default {
 @import '../common/commonstyle.css';
 .summary-panel{
     background-color: grey;
-    position: relative;
-    overflow: hidden;
     .c-item{
         display: flex;
         flex-direction: row;

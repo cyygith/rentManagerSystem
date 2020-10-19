@@ -1,10 +1,10 @@
 <template>
     <div class="billlist-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
         </div>
         <!--详细列表信息-->
-        <div class="center-content">
+        <div class="center-content overflow-content">
             <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex">
                 <div class="c-img">{{tItem.houseName}}</div>
                 <div class="c-other" @click="toDetail(tItem)">
@@ -117,7 +117,7 @@ export default {
 <style lang="scss" scoped>
 @import '../common/commonstyle.css';
 .billlist-panel{
-    position: relative;
+    
     /****下面是列表css*****/
     .center-content{
         background-color: rgb(241, 238, 238);

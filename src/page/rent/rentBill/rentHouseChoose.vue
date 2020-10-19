@@ -1,10 +1,10 @@
 <template>
     <div class="housechoose-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
             <button @click="takeRent" class="btnclass head-save">收租</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-g-group" v-for="(val,key) in resulMap" :key="key">
                 <div class="gg-item"> 
                     {{key}}

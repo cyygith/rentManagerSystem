@@ -1,10 +1,10 @@
 <template>
     <div class="billItem-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back"><&nbsp;退回</button>
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-item" v-if="showItem=='money'">
                 <input type="number" placeholder="请输入租金"  class="c-input" name="money" v-model="form.money">元
             </div>

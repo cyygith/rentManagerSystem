@@ -3,7 +3,7 @@
         <div class="head-panel">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
         	<div class="c-item">
                 <div class="cc-name">租客编号</div>
                 <div class="cc-value" @click="toEdit('personCode',form.personCode);">{{form.personCode}}<span class="ccc-span">></span></div>
@@ -128,7 +128,7 @@ export default {
 @import '../common/commonstyle.css';
 .person-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         display: flex;
         flex-direction: row;

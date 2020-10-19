@@ -3,7 +3,7 @@
         <div class="head-panel">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
         	<div class="c-item">
                 <div class="cc-name">房屋编号</div>
                 <div class="cc-value">{{form.houseCode}}</div>
@@ -116,7 +116,7 @@ export default {
 @import '../../../assets/css/custom-module/mobileCommon.css';
 .house-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         display: flex;
         flex-direction: row;

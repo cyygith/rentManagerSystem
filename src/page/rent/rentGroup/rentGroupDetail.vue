@@ -1,9 +1,9 @@
 <template>
     <div class="group-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
         	<div class="c-item">
                 <div class="cc-name">房组编号</div>
                 <div class="cc-value">{{form.groupCode}}</div>
@@ -37,6 +37,7 @@
                 <div class="cc-value">{{form.updateTime}}</div>
             </div>
         </div>
+        <div class="foot-panel"> </div>
     </div>
 </template>
 <script>
@@ -99,10 +100,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../assets/css/custom-module/mobileCommon.css';
+@import '../common/commonstyle.css';
 .group-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         display: flex;
         flex-direction: row;

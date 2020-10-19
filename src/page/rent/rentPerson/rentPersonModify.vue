@@ -1,10 +1,10 @@
 <template>
     <div class="person-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back"><&nbsp;退回</button>
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-item" v-if="ifNew||showItem==='personCode'">
                 <div>租客编号:</div>
                 <input placeholder="请输入租客编号"  class="c-input" name="personCode" v-model="form.personCode">
@@ -158,7 +158,7 @@ export default {
 @import '../../../assets/css/custom-module/mobileCommon.css';
 .person-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         // display: flex;
         // flex-direction: row;

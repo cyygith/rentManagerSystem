@@ -1,10 +1,10 @@
 <template>
     <div class="contract-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back"><&nbsp;退回</button>
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-item" v-if="ifNew||showItem==='contractCode'">
                 <div>合同编号:</div>
                 <input placeholder="请输入合同编号"  class="c-input" name="contractCode" v-model="form.contractCode">
@@ -176,7 +176,7 @@ export default {
 @import '../../../assets/css/custom-module/mobileCommon.css';
 .contract-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         // display: flex;
         // flex-direction: row;

@@ -1,12 +1,12 @@
 <template>
     <div class="housechoose-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
             <button @click="houseDetail" class="btnclass head-save">查看</button>
             <button @click="addHouse" class="btnclass head-save">新增</button>
             <button @click="delHouse" class="btnclass head-save">删除</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-g-group" v-for="(val,key) in resulMap" :key="key">
                 <div class="gg-item"> 
                     {{key}}

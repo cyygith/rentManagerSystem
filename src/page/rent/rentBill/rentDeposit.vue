@@ -1,9 +1,9 @@
 <template>
     <div class="rentReceipt-panel" id="receiptPanel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel recepitPanel">
+        <div class="content-panel overflow-content recepitPanel">
             <div class="c-title">
                 <div class="cc-title">出租屋专用收据</div>
                 <div class="cc-no">No.{{billNum}}</div>

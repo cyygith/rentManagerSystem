@@ -1,9 +1,9 @@
 <template>
     <div class="house-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
         	<div class="c-item">
                 <div class="cc-name">房屋编号</div>
                 <div class="cc-value" @click="toEdit('houseCode',form.houseCode);">{{form.houseCode}}<span class="ccc-span">></span></div>
@@ -41,6 +41,7 @@
                 <div class="cc-value" @click="toEdit('remark',form.remark);">{{form.remark}}<span class="ccc-span">></span></div>
             </div>
         </div>
+        <div class="foot-panel"> </div>
     </div>
 </template>
 <script>
@@ -112,7 +113,6 @@ export default {
 @import '../common/commonstyle.css';
 .house-panel{
     background-color: grey;
-    position: relative;
     .c-item{
         display: flex;
         flex-direction: row;

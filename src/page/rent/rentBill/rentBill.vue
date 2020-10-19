@@ -1,11 +1,11 @@
 <template>
     <div class="bill-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
             <button class="btnclass head-save" @click="save">完成</button>
             <button class="btnclass head-save" @click="toReceipt">生成收据</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-item">
                 <div class="cc-name">房屋编号</div>
                 <div class="cc-value">{{form.groupName}} {{form.houseName}}</div>
@@ -224,7 +224,7 @@ export default {
 @import '../common/commonstyle.css';
 .bill-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         display: flex;
         flex-direction: row;

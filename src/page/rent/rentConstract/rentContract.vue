@@ -1,9 +1,9 @@
 <template>
     <div class="contract-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
         	<div class="c-item">
                 <div class="cc-name">合同编号</div>
                 <div class="cc-value" @click="toEdit('contractCode',form.contractCode);">{{form.contractCode}}<span class="ccc-span">></span></div>
@@ -150,7 +150,7 @@ export default {
 @import '../common/commonstyle.css';
 .contract-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         display: flex;
         flex-direction: row;

@@ -6,7 +6,7 @@
             <button @click="add" class="btnclass head-save">新增</button>
             <button @click="del" class="btnclass head-save">删除</button>
         </div>
-        <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex" :class="[{'chooseDiv':chooseDiv===tItem.id}]" @click="choose(tItem);">
+        <div class="content-panel overflow-content" v-for='(tItem,tIndex) in tableData' :key="tIndex" :class="[{'chooseDiv':chooseDiv===tItem.id}]" @click="choose(tItem);">
             <div class="c-img" @click="toDetail(tItem)">{{tItem.personCode}}</div>
             <div class="c-other">
                 <div class="cc-room">{{tItem.identAddr}} {{tItem.personName}}</div>

@@ -1,10 +1,10 @@
 <template>
     <div class="group-panel">
-        <div class="head-panel">
+        <div class="head-panel fixed-head">
             <button @click="backBefore"  class="btnclass head-back"><&nbsp;退回</button>
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
-        <div class="content-panel">
+        <div class="content-panel overflow-content">
             <div class="c-item" v-if="ifNew||showItem==='groupCode'">
                 <div>房组编号:</div>
                 <input placeholder="请输入房组编号"  class="c-input" name="groupCode" v-model="form.groupCode">
@@ -124,7 +124,7 @@ export default {
 @import '../../../assets/css/custom-module/mobileCommon.css';
 .group-panel{
     background-color: grey;
-    position: relative;
+    
     .c-item{
         // display: flex;
         // flex-direction: row;

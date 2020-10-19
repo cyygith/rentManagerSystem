@@ -6,11 +6,13 @@
             </keep-alive>
         </transition>
         <v-footer></v-footer>
+        <f-ball></f-ball>
     </div>
 </template>
 
 <script>
     import vFooter from './footer.vue';
+    import fBall from './floatBall';
     import bus from './bus';
     export default {
         name: 'home',
@@ -21,7 +23,7 @@
             }
         },
         components:{
-            vFooter
+            vFooter,fBall
         },
         created(){
             bus.$on('collapse', msg => {

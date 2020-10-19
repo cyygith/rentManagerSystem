@@ -1,8 +1,7 @@
 <template>
     <div class="float_button">
         <div @click="onBtnClicked" ref="floatButton" class="float_info" :style="{'width':itemWidth+'px','height':itemHeight+'px','left':left+'px','top':top+'px'}">
-        	<img></img>
-        	<span class="text">{{text}}</span>
+        	<img src="../../assets/img/img.jpg"></img>
         </div>
     </div>
 </template>
@@ -20,7 +19,7 @@
             }
         },
         props:{
-        	text:{type:String,default:首页},   //按钮文本内容
+        	text:{type:String,default:"首页"},   //按钮文本内容
         	itemWidth:{type:Number,default:40},   //悬浮按钮宽度
         	itemHeight:{type:Number,default:50},   //悬浮按钮高度
         	gapWidth:{type:Number,default:0},   //距离左右两边距离
@@ -33,13 +32,15 @@
         },
         created(){
            this.clientWidth = document.documentElement.clientWidth;
-           this.clientheight = document.documentElement.clientheight;
-           this.left = this.clientWidth - this.clientHeight - this.gapWidth;
-           this.top = this.clientWidth - this.coefficientHeight;
+		   this.clientHeight = document.documentElement.clientHeight;
+		   
+           this.left = this.clientWidth - this.itemWidth - this.gapWidth;
+		   this.top = this.clientHeight*this.coefficientHeight;
         },
         methods:{
             onBtnClicked(){
-            	this.$emit("onFloatBtnClicked");
+				// this.$emit("onFloatBtnClicked");
+				this.$router.push('/rentHome');
             },
             handleScrollStart(){
             	this.timer&&clearTimeout(this.timer);
