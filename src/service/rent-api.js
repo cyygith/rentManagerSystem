@@ -152,6 +152,23 @@ const contractApi = {
   saveOrUpdate (params) {
     return axios.post(`${baseUrl}/rentContract/saveOrUpdate`, params)
   },
+  //生成收据  return axios.post(`${baseUrl}/rentBill/getPdf`, params)
+  getPdf (params) {
+    return  axios({
+      url: `${baseUrl}/rentContract/getDepositPdf`,
+      timeout: 30000, // 请求超时时间10s
+      headers: {
+      //'Content-Type': 'application/x-zip-compressed',
+        'Authorization': '',//token orgin vaue  [token]
+      },
+      xhrFields: {
+        withCredentials: true
+      },
+      method:'post',
+      data:params,
+      responseType: 'blob',
+    });
+  },
 }
 
 /**

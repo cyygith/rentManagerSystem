@@ -10,7 +10,9 @@ let routerMode = 'hash';
 let imgBaseUrl = '';
 
 if(process.env.NODE_ENV == 'development'){
-    baseUrl = 'http://127.0.0.1:8080/ellingmaster';
+    //baseUrl = 'http://127.0.0.1:8080/ellingmaster';
+    // baseUrl = 'http://192.168.1.103:8080/ellingmaster'
+    baseUrl = 'http://128.64.168.243:8080/ellingmaster'
     imgBaseUrl = 'http://127.0.0.1:8080/demo/image';
 }else if(process.env.NODE_ENV == 'production'){
     baseUrl = 'http://www.xiwaiwai.top/ellingmaster';

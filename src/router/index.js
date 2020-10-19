@@ -26,25 +26,6 @@ let router = new Router({
       component: resolve => require(['../page/account/login/register.vue'], resolve),
     },
     {
-      path: '/home',
-      component: resolve => require(['../components/common/Home.vue'], resolve),
-      meta: { title: '首界面' },
-      children: [ // 二级路由。对应App.vue
-        {
-          path: '',
-          name: 'mainpage',
-          component: resolve => require(['../page/account/main/mainpage.vue'], resolve),
-          meta: { title: '主页' }
-        },
-        {
-          path: '/me',
-          name: 'me',
-          component: resolve => require(['../page/account/me/me.vue'], resolve),
-          meta: { title: '我的' }
-        },
-      ]
-    },
-    {
       path: '/rentHome',
       component: resolve => require(['../components/common/Home.vue'], resolve),
       meta: { title: '首界面' },

@@ -2,6 +2,7 @@
     <div class="contract-panel">
         <div class="head-panel">
             <button @click="backBefore"  class="btnclass head-back">< 退回</button>
+            <button class="btnclass head-save" @click="toDeposit">生成押金单</button>
         </div>
         <div class="content-panel">
         	<div class="c-item">
@@ -136,6 +137,44 @@ export default {
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
                 loading.close();
+            });	
+        },
+        //生成押金单
+        toDeposit(item,value){
+            let id = this.$route.query.id;
+            let param = new URLSearchParams();
+            param.append("id",id);
+            // let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            contractApi.getPdf(param).then(x => {   //
+                console.log("finally here....");
+                console.dir(x);
+                // if (x.status == 200) {
+                    // vm.dialogExportOrder = false;
+                    const content = x;
+                    const blob = new Blob([content])
+                    const fileName = '房组收据.pdf';  //自定义下载文件的名字
+                    if ('download' in document.createElement('a')) { // 非IE下载
+                        const elink = document.createElement('a');
+                        elink.download = fileName;
+                        elink.style.display = 'none';
+                        elink.href = URL.createObjectURL(blob);
+                        document.body.appendChild(elink);
+                        elink.click();
+                        URL.revokeObjectURL(elink.href); // 释放URL 对象
+                        document.body.removeChild(elink);
+                    } else { // IE10+下载
+                        navigator.msSaveBlob(blob, fileName);
+                    }
+                // }
+            }).catch(function(error){
+                console.log(error);
+                console.dir(error);
+            	// console.log(error.response)   //可获取错误的返回信息
+                // if (error.response.status==400) {
+                    
+                // }
+            }).finally(() => {
+            
             });	
         },
     }
