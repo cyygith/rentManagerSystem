@@ -69,10 +69,6 @@
                 <div class="cc-name">更新时间</div>
                 <div class="cc-value">{{form.updateTime}}</div>
             </div>
-        	<div class="c-item">
-                <div class="cc-name">实体ID</div>
-                <div class="cc-value">{{form.tenantId}}</div>
-            </div>
         </div>
         <div class="foot-panel"> </div>
     </div>

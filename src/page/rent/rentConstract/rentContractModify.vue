@@ -69,10 +69,6 @@
                 <div>更新时间:</div>
                 <input placeholder="请输入更新时间"  class="c-input" name="updateTime" v-model="form.updateTime">
             </div>
-            <div class="c-item" v-if="ifNew||showItem==='tenantId'">
-                <div>实体ID:</div>
-                <input placeholder="请输入实体ID"  class="c-input" name="tenantId" v-model="form.tenantId">
-            </div>
         </div>
     </div>
 </template>
