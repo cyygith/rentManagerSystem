@@ -43,7 +43,8 @@
             </div>
             <div class="c-item" v-if="ifNew||showItem==='status'">
                 <div>状态:</div>
-                <input placeholder="请输入状态"  class="c-input" name="status" v-model="form.status">
+                <span class="c-g-item" @click="changeStatus('1');" :class="{'c-g-item-this':form.status=='1'}">启用</span>
+                <span class="c-g-item" @click="changeStatus('0');" :class="{'c-g-item-this':form.status=='0'}">禁用</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='orderNum'">
                 <div>排序号:</div>
@@ -111,6 +112,9 @@ export default {
         //返回上一页
         backBefore(){
             this.$router.back(-1);
+        },
+        changeStatus(val){
+            this.form.status = val;
         },
         // 获取详情
         detail(){
