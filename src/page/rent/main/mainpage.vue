@@ -138,8 +138,6 @@ export default {
             param.append("size",this.page.pageSize);
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
             billApi.list(param).then((res)=>{
-                console.log('abccccc');
-                console.dir(res);
                 if(res.code == "0"){
                 //   this.tableData = res.data.list;
                   this.tableData.push.apply(this.tableData,res.data.list);
@@ -149,6 +147,8 @@ export default {
                   this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
                   //this.$alert('获取信息失败，联系管理员','提示信息');
                 }
+                loading.close();
+            }).catch(error=>{
                 loading.close();
             });
 	    },

@@ -131,7 +131,8 @@
     	}
     	img{
     		width:55px;
-    		height:55px;
+			height:55px;
+			border-radius:50px;
     	}
     
     }

@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../assets/css/custom-module/mobileCommon.css';
+@import '../common/commonstyle.css';
 .person-panel{
     background-color: grey;
     

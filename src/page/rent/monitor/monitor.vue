@@ -78,19 +78,19 @@ export default {
         detail(){
             let idd = this.$route.query.id;
             let param = new URLSearchParams();
-            // let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
             billApi.monitorRentEndTime(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){
-                        console.log("value....");
-                        console.dir(res.data);
                         this.resulMap = res.data;
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
-                // loading.close();
-            });	
+                loading.close();
+            }).catch(error=>{
+                loading.close();
+            });;	
         },
 
         //修改
