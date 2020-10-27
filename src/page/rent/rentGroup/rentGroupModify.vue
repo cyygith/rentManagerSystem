@@ -5,10 +5,6 @@
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
         <div class="content-panel overflow-content">
-            <div class="c-item" v-if="ifNew||showItem==='groupCode'">
-                <div>房组编号:</div>
-                <input placeholder="请输入房组编号"  class="c-input" name="groupCode" v-model="form.groupCode">
-            </div>
             <div class="c-item" v-if="ifNew||showItem==='groupName'">
                 <div>房组名称:</div>
                 <input placeholder="请输入房组名称"  class="c-input" name="groupName" v-model="form.groupName">

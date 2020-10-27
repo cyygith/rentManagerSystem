@@ -5,13 +5,6 @@
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
         <div class="content-panel overflow-content">
-            <div class="c-item" v-if="ifNew||showItem==='houseCode'">
-                <div>房屋编号:</div>
-                <div>
-                    <input  placeholder="请输入房屋编号"  class="c-input" name="houseCode" v-model="form.houseCode">
-                </div>
-                
-            </div>
             <div class="c-item" v-if="ifNew||showItem==='houseName'"> 
                 <div>房屋名称:</div>
                 <input  placeholder="请输入房屋名称"  class="c-input" name="houseName" v-model="form.houseName">

@@ -6,7 +6,7 @@
         <div class="content-panel overflow-content">
         	<div class="c-item">
                 <div class="cc-name">房屋编号</div>
-                <div class="cc-value" @click="toEdit('houseCode',form.houseCode);">{{form.houseCode}}<span class="ccc-span">></span></div>
+                <div class="cc-value">{{form.houseCode}}</div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">房屋名称</div>

@@ -5,10 +5,6 @@
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
         <div class="content-panel overflow-content">
-            <div class="c-item" v-if="ifNew||showItem==='personCode'">
-                <div>租客编号:</div>
-                <input placeholder="请输入租客编号"  class="c-input" name="personCode" v-model="form.personCode">
-            </div>
             <div class="c-item" v-if="ifNew||showItem==='personName'">
                 <div>租客名称:</div>
                 <input placeholder="请输入租客名称"  class="c-input" name="personName" v-model="form.personName">
@@ -53,10 +49,6 @@
             <div class="c-item" v-if="ifNew||showItem==='remark'">
                 <div>备注:</div>
                 <input placeholder="请输入备注"  class="c-input" name="remark" v-model="form.remark">
-            </div>
-            <div class="c-item" v-if="ifNew||showItem==='createTime'">
-                <div>创建时间:</div>
-                <input placeholder="请输入创建时间"  class="c-input" name="createTime" v-model="form.createTime">
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
         <div class="content-panel overflow-content">
         	<div class="c-item">
                 <div class="cc-name">合同编号</div>
-                <div class="cc-value" @click="toEdit('contractCode',form.contractCode);">{{form.contractCode}}<span class="ccc-span">></span></div>
+                <div class="cc-value">{{form.contractCode}}</div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">合同名称</div>

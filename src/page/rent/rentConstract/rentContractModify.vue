@@ -5,10 +5,6 @@
             <button class="btnclass head-save" @click="saveOrUpdate">保存</button>
         </div>
         <div class="content-panel overflow-content">
-            <div class="c-item" v-if="ifNew||showItem==='contractCode'">
-                <div>合同编号:</div>
-                <input placeholder="请输入合同编号"  class="c-input" name="contractCode" v-model="form.contractCode">
-            </div>
             <div class="c-item" v-if="ifNew||showItem==='contractName'">
                 <div>合同名称:</div>
                 <input placeholder="请输入合同名称"  class="c-input" name="contractName" v-model="form.contractName">
@@ -17,6 +13,26 @@
                 <div>房屋编号:</div>
                 <input placeholder="请输入房屋编号"  class="c-input" name="houseCode" v-model="form.houseCode">
             </div>
+            <div class="c-item" v-if="ifNew||showItem==='houseCode'">
+            	<div>房屋编号:</div>
+            	<el-popover  placement="right" width="200" trigger="click">
+	                <el-tree
+	                    :props="defaultProps"
+	                    :load="loadNode"
+	                    ref="treeForm"
+	                    node-key="id"
+	                    @node-click="handleNodeClick"
+	                    lazy>
+	                </el-tree>
+	                <el-form-item slot="reference" label="父菜单名称" prop="parentName">
+	                    <el-input v-model="form.parentName" size="small" :disabled="isDetail"></el-input>
+	                </el-form-item>
+	            </el-popover> 
+            
+            </div>
+            
+            
+            
             <div class="c-item" v-if="ifNew||showItem==='personCode'">
                 <div>租客编号:</div>
                 <input placeholder="请输入租客编号"  class="c-input" name="personCode" v-model="form.personCode">
@@ -101,7 +117,11 @@ export default {
             },
             ifNew:false, //是否为新增，如果新增，则不加一个个过滤
             showItem:'',
-            showItemValue:''
+            showItemValue:'',
+            defaultProps: {
+	          label: 'name',
+	          isLeaf: 'isLeaf'
+	      	},
         }
     },
     computed:{
@@ -166,8 +186,33 @@ export default {
                 }
                 loading.close();
             });	
-
         },
+        //加载父节点数据
+	    loadNode(node, resolve) {
+	        let param = new URLSearchParams();
+	        if(node.level === 0){
+	            param.append("parentId", 0);
+	            // resolve({'icon': "el-icon-menu",
+	            //   'id': "0",
+	            //   'isLeaf': "FALSE",
+	            //   'name': "顶级菜单",
+	            //   'pid': "000",
+	            //   'url': "top"});
+	        }else{
+	            param.append("parentId", node.data.id);
+	        }
+	        menuApi.getMenuTree(param).then((res)=>{
+	            if(res.code == 0){
+	                resolve(res.data);
+	            }
+	        });
+	    },
+	    //选择父节点
+	    handleNodeClick(data) {
+	        this.checkedId = data.id;
+	        this.form.parentId = data.id;
+	        this.form.parentName = data.name;
+	    },
     }
 }
 </script>
