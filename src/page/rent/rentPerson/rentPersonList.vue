@@ -8,7 +8,7 @@
         </div>
         <div class="overflow-content">
             <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex" :class="[{'chooseDiv':chooseDiv===tItem.id}]" @click="choose(tItem);">
-                <div class="c-img" @click="toDetail(tItem)">{{tItem.personCode}}</div>
+                <div class="c-img" @click="toDetail(tItem)">{{tItem.personName.substring(0,1)}}</div>
                 <div class="c-other">
                     <div class="cc-room">{{tItem.identAddr}} {{tItem.personName}}</div>
                     <div class="cc-content">

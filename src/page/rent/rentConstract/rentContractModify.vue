@@ -35,31 +35,34 @@
             </div>
             <div class="c-item" v-if="ifNew||showItem==='signTime'">
                 <div>签约时间:</div>
-                <el-date-picker  v-model="form.signTime"> </el-date-picker>
+                <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd"   v-model="form.signTime"> </el-date-picker>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='startTime'">
                 <div>开始时间:</div>
-                <el-date-picker  v-model="form.startTime"> </el-date-picker>
+                <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd"  v-model="form.startTime"> </el-date-picker>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='endTime'">
                 <div>结束时间:</div>
-                <input placeholder="请输入结束时间"  class="c-input" name="endTime" v-model="form.endTime">
+                <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="form.endTime"> </el-date-picker>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='renter'">
                 <div>租金:</div>
-                <input placeholder="请输入租金"  class="c-input" name="renter" v-model="form.renter">
+                <input type="number" placeholder="请输入租金"  class="c-input" name="renter" v-model="form.renter">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='deposit'">
                 <div>押金:</div>
-                <input placeholder="请输入押金"  class="c-input" name="deposit" v-model="form.deposit">
+                <input type="number"  placeholder="请输入押金"  class="c-input" name="deposit" v-model="form.deposit">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='waterCloseType'">
                 <div>水费结算方式（1-按人10元/月  2-按月结算）:</div>
-                <input placeholder="请输入水费结算方式（1-按人10元/月  2-按月结算）"  class="c-input" name="waterCloseType" v-model="form.waterCloseType">
+                <span class="c-g-item" @click="changeWaterCloseType('1');" :class="{'c-g-item-this':form.waterCloseType=='1'}">按人支付（10元/人）</span>
+                <span class="c-g-item" @click="changeWaterCloseType('2');" :class="{'c-g-item-this':form.waterCloseType=='2'}">按吨数支付（看表）</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='payType'">
                 <div>付款方式:</div>
-                <input placeholder="请输入付款方式"  class="c-input" name="payType" v-model="form.payType">
+                <span class="c-g-item" @click="changePayType('1');" :class="{'c-g-item-this':form.payType=='1'}">支付宝</span>
+                <span class="c-g-item" @click="changePayType('2');" :class="{'c-g-item-this':form.payType=='2'}">微信</span>
+                <span class="c-g-item" @click="changePayType('3');" :class="{'c-g-item-this':form.payType=='3'}">现金</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='status'">
                 <div>状态:</div>
@@ -68,17 +71,14 @@
             </div>
             <div class="c-item" v-if="ifNew||showItem==='orderNum'">
                 <div>排序号:</div>
-                <input placeholder="请输入排序号"  class="c-input" name="orderNum" v-model="form.orderNum">
+                <input type="number"  placeholder="请输入排序号"  class="c-input" name="orderNum" v-model="form.orderNum">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='remark'">
                 <div>备注:</div>
-                <input placeholder="请输入备注"  class="c-input" name="remark" v-model="form.remark">
-            </div>
-            <div class="c-item" v-if="ifNew||showItem==='createTime'">
-                <div>创建时间:</div>
-                <input placeholder="请输入创建时间"  class="c-input" name="createTime" v-model="form.createTime">
+                <textarea placeholder="请输入备注" rows="5" class="c-textarea" name="remark" v-model="form.remark"></textarea>
             </div>
         </div>
+        <div class="foot-panel"> </div>
     </div>
 </template>
 <script>
@@ -147,6 +147,12 @@ export default {
         },
         changeStatus(val){
             this.form.status = val;
+        },
+        changePayType(val){
+            this.form.payType = val;
+        },
+        changeWaterCloseType(val){
+            this.form.waterCloseType = val;
         },
         // 获取详情
         detail(){
