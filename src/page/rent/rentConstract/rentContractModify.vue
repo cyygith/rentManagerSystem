@@ -10,40 +10,36 @@
                 <input placeholder="请输入合同名称"  class="c-input" name="contractName" v-model="form.contractName">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='houseCode'">
-                <div>房屋编号:</div>
-                <input placeholder="请输入房屋编号"  class="c-input" name="houseCode" v-model="form.houseCode">
-            </div>
-            <div class="c-item" v-if="ifNew||showItem==='houseCode'">
             	<div>房屋编号:</div>
-            	<el-popover  placement="right" width="200" trigger="click">
-	                <el-tree
-	                    :props="defaultProps"
-	                    :load="loadNode"
-	                    ref="treeForm"
-	                    node-key="id"
-	                    @node-click="handleNodeClick"
-	                    lazy>
-	                </el-tree>
-	                <el-form-item slot="reference" label="父菜单名称" prop="parentName">
-	                    <el-input v-model="form.parentName" size="small" :disabled="isDetail"></el-input>
-	                </el-form-item>
-	            </el-popover> 
-            
+            	<el-select v-model="form.houseCode"  placeholder="请选择" filterable style="width:90%" size="small">
+                    <el-option-group v-for="group in groupHouseList" :key="group.value" :label="group.label">
+                        <el-option
+                            v-for="item in group.option"
+                            :key="item.houseCode"
+                            :label="item.houseName"
+                            :value="item.houseCode">
+                        </el-option>
+                    </el-option-group>
+                </el-select> 
             </div>
-            
-            
-            
             <div class="c-item" v-if="ifNew||showItem==='personCode'">
                 <div>租客编号:</div>
-                <input placeholder="请输入租客编号"  class="c-input" name="personCode" v-model="form.personCode">
+                <el-select v-model="form.personCode"  placeholder="请选择" filterable style="width:90%" size="small">
+                    <el-option
+                        v-for="item in personList"
+                        :key="item.personCode"
+                        :label="item.personName"
+                        :value="item.personCode">
+                    </el-option>
+                </el-select>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='signTime'">
                 <div>签约时间:</div>
-                <input placeholder="请输入签约时间"  class="c-input" name="signTime" v-model="form.signTime">
+                <el-date-picker  v-model="form.signTime"> </el-date-picker>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='startTime'">
                 <div>开始时间:</div>
-                <input placeholder="请输入开始时间"  class="c-input" name="startTime" v-model="form.startTime">
+                <el-date-picker  v-model="form.startTime"> </el-date-picker>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='endTime'">
                 <div>结束时间:</div>
@@ -82,15 +78,12 @@
                 <div>创建时间:</div>
                 <input placeholder="请输入创建时间"  class="c-input" name="createTime" v-model="form.createTime">
             </div>
-            <div class="c-item" v-if="ifNew||showItem==='updateTime'">
-                <div>更新时间:</div>
-                <input placeholder="请输入更新时间"  class="c-input" name="updateTime" v-model="form.updateTime">
-            </div>
         </div>
     </div>
 </template>
 <script>
-import {contractApi} from "@/service/rent-api";
+import {contractApi,personApi,groupApi} from "@/service/rent-api";
+import {menuApi} from "@/service/sys-api";
 export default {
     data() {
         return {
@@ -121,7 +114,10 @@ export default {
             defaultProps: {
 	          label: 'name',
 	          isLeaf: 'isLeaf'
-	      	},
+            },
+            isDetail:false,
+            personList:[],
+            groupHouseList:[],
         }
     },
     computed:{
@@ -133,7 +129,9 @@ export default {
         this.ifNew = this.$route.query.ifNew;
         if(!this.ifNew){ //如果不是新的，则查询
             this.detail();
-        }
+        };
+        this.getListByGroup();//获取用户组信息
+        this.getPersonList();//获取用户列表信息
     },
     watch:{
     
@@ -187,32 +185,35 @@ export default {
                 loading.close();
             });	
         },
-        //加载父节点数据
-	    loadNode(node, resolve) {
-	        let param = new URLSearchParams();
-	        if(node.level === 0){
-	            param.append("parentId", 0);
-	            // resolve({'icon': "el-icon-menu",
-	            //   'id': "0",
-	            //   'isLeaf': "FALSE",
-	            //   'name': "顶级菜单",
-	            //   'pid': "000",
-	            //   'url': "top"});
-	        }else{
-	            param.append("parentId", node.data.id);
-	        }
-	        menuApi.getMenuTree(param).then((res)=>{
-	            if(res.code == 0){
-	                resolve(res.data);
-	            }
-	        });
-	    },
-	    //选择父节点
-	    handleNodeClick(data) {
-	        this.checkedId = data.id;
-	        this.form.parentId = data.id;
-	        this.form.parentName = data.name;
-	    },
+        //获取房屋列表
+        getListByGroup(){
+            let param = new URLSearchParams();
+            param.append("page",0);
+            param.append("size",1000);
+            groupApi.getListByGroup(param).then((res)=>{
+                if(res.code == "0"){
+                    console.log("fangwuliebiao ....");
+                    console.dir(res);
+                    console.dir(res.data)
+                  this.groupHouseList = res.data;
+                }else{
+                  this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
+                }
+            });
+        },
+        //获取列表
+        getPersonList(){
+            let param = new URLSearchParams();
+            param.append("page",0);
+            param.append("size",1000);
+            personApi.list(param).then((res)=>{
+                if(res.code == "0"){
+                  this.personList = res.data.list;
+                }else{
+                  this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
+                }
+            });
+        },
     }
 }
 </script>

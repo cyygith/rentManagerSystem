@@ -38,6 +38,10 @@ const groupApi = {
   saveOrUpdate (params) {
     return axios.post(`${baseUrl}/rentGroup/saveOrUpdate`, params)
   },
+  // 根据组别选择
+  getListByGroup (params) {
+    return axios.post(`${baseUrl}/rentGroup/getListByGroup`, params)
+  },
 }
 
 
