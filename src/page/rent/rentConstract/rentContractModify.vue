@@ -54,20 +54,16 @@
                 <input type="number"  placeholder="请输入押金"  class="c-input" name="deposit" v-model="form.deposit">
             </div>
             <div class="c-item" v-if="ifNew||showItem==='waterCloseType'">
-                <div>水费结算方式（1-按人10元/月  2-按月结算）:</div>
-                <span class="c-g-item" @click="changeWaterCloseType('1');" :class="{'c-g-item-this':form.waterCloseType=='1'}">按人支付（10元/人）</span>
-                <span class="c-g-item" @click="changeWaterCloseType('2');" :class="{'c-g-item-this':form.waterCloseType=='2'}">按吨数支付（看表）</span>
+                <div>水费结算方式:</div>
+                <span class="c-g-item" v-for='(val,key) in waterCloseTypes' :key="key" @click="changeWaterCloseType(key);" :class="{'c-g-item-this':form.waterCloseType==key}">{{val}}</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='payType'">
                 <div>付款方式:</div>
-                <span class="c-g-item" @click="changePayType('1');" :class="{'c-g-item-this':form.payType=='1'}">支付宝</span>
-                <span class="c-g-item" @click="changePayType('2');" :class="{'c-g-item-this':form.payType=='2'}">微信</span>
-                <span class="c-g-item" @click="changePayType('3');" :class="{'c-g-item-this':form.payType=='3'}">现金</span>
+                <span class="c-g-item" v-for='(val,key) in payTypes' :key="key" @click="changePayType(key);" :class="{'c-g-item-this':form.payType==key}">{{val}}</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='status'">
                 <div>状态:</div>
-                <span class="c-g-item" @click="changeStatus('1');" :class="{'c-g-item-this':form.status=='1'}">启用</span>
-                <span class="c-g-item" @click="changeStatus('0');" :class="{'c-g-item-this':form.status=='0'}">禁用</span>
+                <span class="c-g-item" v-for='(val,key) in statuss' :key="key" @click="changeStatus(key);" :class="{'c-g-item-this':form.status==key}">{{val}}</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='orderNum'">
                 <div>排序号:</div>
@@ -118,6 +114,9 @@ export default {
             isDetail:false,
             personList:[],
             groupHouseList:[],
+            waterCloseTypes:{},//水费结算方式
+            payTypes:{},//付款方式
+            statuss:{},//付款方式
         }
     },
     computed:{
@@ -132,6 +131,7 @@ export default {
         };
         this.getListByGroup();//获取用户组信息
         this.getPersonList();//获取用户列表信息
+        this.initDict();//初始化字典数据
     },
     watch:{
     
@@ -153,6 +153,22 @@ export default {
         },
         changeWaterCloseType(val){
             this.form.waterCloseType = val;
+        },
+        //初始化字典数据
+        initDict(){
+            //水费结算方式
+            this.dictApi.getDictByType({"typeCode":this.dictApi.dict.typeCodeCd.waterCloseType}).then((item)=>{
+                this.waterCloseTypes = item;
+            });
+            //付款方式
+            this.dictApi.getDictByType({"typeCode":this.dictApi.dict.typeCodeCd.payType}).then((item)=>{
+                this.payTypes = item;
+            });
+            //付款方式
+            this.dictApi.getDictByType({"typeCode":this.dictApi.dict.typeCodeCd.useNo}).then((item)=>{
+                this.statuss = item;
+            });
+
         },
         // 获取详情
         detail(){
@@ -227,8 +243,6 @@ export default {
 <style lang="scss" scoped>
 @import '../../../assets/css/custom-module/mobileCommon.css';
 .contract-panel{
-    background-color: grey;
-    
     .c-item{
         // display: flex;
         // flex-direction: row;

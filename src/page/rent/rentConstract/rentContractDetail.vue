@@ -43,15 +43,15 @@
             </div>
         	<div class="c-item">
                 <div class="cc-name">水费结算方式（1-按人10元/月  2-按月结算）</div>
-                <div class="cc-value">{{form.waterCloseType}}</div>
+                <div class="cc-value">{{waterCloseTypeName}}</div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">付款方式</div>
-                <div class="cc-value">{{form.payType}}</div>
+                <div class="cc-value">{{payTypeName}}</div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">状态</div>
-                <div class="cc-value">{{form.status}}</div>
+                <div class="cc-value">{{statusName}}</div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">排序号</div>
@@ -99,6 +99,9 @@ export default {
             	updateTime:null,
             	tenantId:null,
             },
+            waterCloseTypeName:'',//水费结算方式名称
+            payTypeName:'',//付款方式
+            statusName:'',//状态名称
         }
     },
     computed:{
@@ -129,6 +132,18 @@ export default {
                 if(res.code == "0"){
                     if(res.data){    
                         this.form = res.data;
+                        //水费结算方式
+                        this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.waterCloseType,res.data.waterCloseType).then((val)=>{
+                            this.waterCloseTypeName = val;
+                        });
+                        //付款方式
+                        this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.payType,res.data.payType).then((val)=>{
+                            this.payTypeName = val;
+                        });
+                        //状态
+                        this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.useNo,res.data.status).then((val)=>{
+                            this.statusName = val;  
+                        });
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');
@@ -183,7 +198,6 @@ export default {
 <style lang="scss" scoped>
 @import '../common/commonstyle.css';
 .contract-panel{
-    background-color: grey;
     .c-item{
         display: flex;
         flex-direction: row;

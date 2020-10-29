@@ -42,7 +42,7 @@
             </div>
         	<div class="c-item">
                 <div class="cc-name">状态</div>
-                <div class="cc-value" @click="toEdit('status',form.status);">{{form.status}}<span class="ccc-span">></span></div>
+                <div class="cc-value" @click="toEdit('status',form.status);">{{statusName}}<span class="ccc-span">></span></div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">排序号</div>
@@ -79,6 +79,7 @@ export default {
             	updateTime:null,
             	tenantId:null,
             },
+            statusName:'',//状态名称
         }
     },
     computed:{
@@ -113,6 +114,10 @@ export default {
                 if(res.code == "0"){
                     if(res.data){    
                         this.form = res.data;
+                        //状态
+                        this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.useNo,res.data.status).then((val)=>{
+                            this.statusName = val;  
+                        });
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');

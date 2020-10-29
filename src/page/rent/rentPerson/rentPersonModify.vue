@@ -39,8 +39,7 @@
             </div>
             <div class="c-item" v-if="ifNew||showItem==='status'">
                 <div>状态:</div>
-                <span class="c-g-item" @click="changeStatus('1');" :class="{'c-g-item-this':form.status=='1'}">启用</span>
-                <span class="c-g-item" @click="changeStatus('0');" :class="{'c-g-item-this':form.status=='0'}">禁用</span>
+                <span class="c-g-item" v-for='(val,key) in statuss' :key="key" @click="changeStatus(key);" :class="{'c-g-item-this':form.status==key}">{{val}}</span>
             </div>
             <div class="c-item" v-if="ifNew||showItem==='orderNum'">
                 <div>排序号:</div>
@@ -79,7 +78,8 @@ export default {
             },
             ifNew:false, //是否为新增，如果新增，则不加一个个过滤
             showItem:'',
-            showItemValue:''
+            showItemValue:'',
+            statuss:{},//付款方式
         }
     },
     computed:{
@@ -92,6 +92,7 @@ export default {
         if(!this.ifNew){ //如果不是新的，则查询
             this.detail();
         }
+        this.initDict();//初始化字典数据
     },
     watch:{
     
@@ -107,6 +108,14 @@ export default {
         },
         changeStatus(val){
             this.form.status = val;
+        },
+        //初始化字典数据
+        initDict(){
+            //付款方式
+            this.dictApi.getDictByType({"typeCode":this.dictApi.dict.typeCodeCd.useNo}).then((item)=>{
+                this.statuss = item;
+            });
+
         },
         // 获取详情
         detail(){

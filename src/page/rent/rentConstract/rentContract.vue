@@ -41,16 +41,16 @@
                 <div class="cc-value" @click="toEdit('deposit',form.deposit);">{{form.deposit}}<span class="ccc-span">></span></div>
             </div>
         	<div class="c-item">
-                <div class="cc-name">水费结算方式（1-按人10元/月  2-按月结算）</div>
+                <div class="cc-name">水费结算方式</div>
                 <div class="cc-value" @click="toEdit('waterCloseType',form.waterCloseType);">{{waterCloseTypeName}}<span class="ccc-span">></span></div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">付款方式</div>
-                <div class="cc-value" @click="toEdit('payType',form.payType);">{{form.payType}}<span class="ccc-span">></span></div>
+                <div class="cc-value" @click="toEdit('payType',form.payType);">{{payTypeName}}<span class="ccc-span">></span></div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">状态</div>
-                <div class="cc-value" @click="toEdit('status',form.status);">{{form.status}}<span class="ccc-span">></span></div>
+                <div class="cc-value" @click="toEdit('status',form.status);">{{statusName}}<span class="ccc-span">></span></div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">排序号</div>
@@ -67,10 +67,6 @@
         	<div class="c-item">
                 <div class="cc-name">更新时间</div>
                 <div class="cc-value" @click="toEdit('updateTime',form.updateTime);">{{form.updateTime}}<span class="ccc-span">></span></div>
-            </div>
-        	<div class="c-item">
-                <div class="cc-name">实体ID</div>
-                <div class="cc-value" @click="toEdit('tenantId',form.tenantId);">{{form.tenantId}}<span class="ccc-span">></span></div>
             </div>
         </div>
     </div>
@@ -102,6 +98,8 @@ export default {
             	tenantId:null,
             },
             waterCloseTypeName:'',//水费结算方式名称
+            payTypeName:'',//付款方式
+            statusName:'',//状态名称
         }
     },
     computed:{
@@ -136,12 +134,17 @@ export default {
                 if(res.code == "0"){
                     if(res.data){    
                         this.form = res.data;
-                        console.log("要去取字典了 。。。");
-                        console.log("before");
-                        console.dir(this.form);
+                        //水费结算方式
                         this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.waterCloseType,res.data.waterCloseType).then((val)=>{
                             this.waterCloseTypeName = val;
-                            console.log("waterCloseTypeName:::"+this.waterCloseTypeName);
+                        });
+                        //付款方式
+                        this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.payType,res.data.payType).then((val)=>{
+                            this.payTypeName = val;
+                        });
+                        //状态
+                        this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.useNo,res.data.status).then((val)=>{
+                            this.statusName = val;  
                         });
                     }
                 }else{
@@ -159,8 +162,6 @@ export default {
 <style lang="scss" scoped>
 @import '../common/commonstyle.css';
 .contract-panel{
-    background-color: grey;
-    
     .c-item{
         display: flex;
         flex-direction: row;
