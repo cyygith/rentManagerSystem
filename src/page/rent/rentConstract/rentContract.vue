@@ -42,7 +42,7 @@
             </div>
         	<div class="c-item">
                 <div class="cc-name">水费结算方式（1-按人10元/月  2-按月结算）</div>
-                <div class="cc-value" @click="toEdit('waterCloseType',form.waterCloseType);">{{form.waterCloseType}}<span class="ccc-span">></span></div>
+                <div class="cc-value" @click="toEdit('waterCloseType',form.waterCloseType);">{{waterCloseTypeName}}<span class="ccc-span">></span></div>
             </div>
         	<div class="c-item">
                 <div class="cc-name">付款方式</div>
@@ -101,6 +101,7 @@ export default {
             	updateTime:null,
             	tenantId:null,
             },
+            waterCloseTypeName:'',//水费结算方式名称
         }
     },
     computed:{
@@ -135,12 +136,21 @@ export default {
                 if(res.code == "0"){
                     if(res.data){    
                         this.form = res.data;
+                        console.log("要去取字典了 。。。");
+                        console.log("before");
+                        console.dir(this.form);
+                        this.dictApi.formatRemote(this.dictApi.dict.typeCodeCd.waterCloseType,res.data.waterCloseType).then((val)=>{
+                            this.waterCloseTypeName = val;
+                            console.log("waterCloseTypeName:::"+this.waterCloseTypeName);
+                        });
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
                 loading.close();
-            });	
+            }).catch(error=>{
+                loading.close();
+            });;	
         },
     }
 }
