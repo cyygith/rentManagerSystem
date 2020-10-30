@@ -20,7 +20,10 @@
                 <div class="cc-name">合同管理</div>
                 <div class="cc-value" @click="toContract('money',form.money);"><span class="ccc-span">></span></div>
             </div>
-
+			<div class="c-item">
+                <div class="cc-name">参数配置</div>
+                <div class="cc-value" @click="toConfig('money',form.money);"><span class="ccc-span">></span></div>
+            </div>
         </div>
     </div>
 </template>
@@ -70,6 +73,10 @@ export default {
         },
         //合同管理
         toContract(item,value){
+            this.$router.push({path:'rentContractList',query:{}});
+        },
+        //参数配置
+        toConfig(item,value){
             this.$router.push({path:'rentContractList',query:{}});
         },
         

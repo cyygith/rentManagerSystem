@@ -18,12 +18,17 @@ const dictApi = {
 			'0': '禁用',
 			'1': '启用'
 		},
+		status: {
+			'0': '禁用',
+			'1': '启用'
+		},
 		typeCodeCd: {
 			yesNo: 'yesNo',
 			okNo: 'okNo',
 			useNo: 'useNo',
-			waterCloseType: 'waterCloseType',
-			payType: 'payType'
+			status: 'status',
+			waterCloseType: 'waterCloseType',//水费结算方式
+			payType: 'payType',//付款方式
 		}
 	},
 	// 根据字典类型获取字典值
@@ -55,6 +60,7 @@ const dictApi = {
 			});
 		}
 	},
+	//解析字典值
 	formatRemote(typeCode, keyValue) {
 		if (!typeCode) return new Promise();
 		if (this.getDictCache(typeCode) == null) {//如果缓存中没有则不获取

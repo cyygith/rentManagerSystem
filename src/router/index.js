@@ -68,6 +68,12 @@ let router = new Router({
         {path: '/rentContractModify',component: resolve => require(['../page/rent/rentConstract/rentContractModify.vue'], resolve)},
         {path: '/rentContractDetail',component: resolve => require(['../page/rent/rentConstract/rentContractDetail.vue'], resolve)},
         {path: '/rentContractList',component: resolve => require(['../page/rent/rentConstract/rentContractList.vue'], resolve)},
+        
+        //租房-config信息
+        {path: '/rentConfig',component: resolve => require(['../page/rent/rentConfig/rentConfig.vue'], resolve)},
+        {path: '/rentConfigModify',component: resolve => require(['../page/rent/rentConfig/rentConfigModify.vue'], resolve)},
+        {path: '/rentConfigDetail',component: resolve => require(['../page/rent/rentConfig/rentConfigDetail.vue'], resolve)},
+        {path: '/rentConfigList',component: resolve => require(['../page/rent/rentConfig/rentConfigList.vue'], resolve)},
       ]
     },
 

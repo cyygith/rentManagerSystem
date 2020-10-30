@@ -223,21 +223,57 @@ const billApi = {
   getPdf (params) {
     // return axios.post(`${baseUrl}/rentBill/getPdf`, params)
     return  axios({
-      url: `${baseUrl}/rentBill/getPdf`,
-      timeout: 30000, // 请求超时时间10s
-      headers: {
-      //'Content-Type': 'application/x-zip-compressed',
-        'Authorization': '',//token orgin vaue  [token]
-      },
-      xhrFields: {
-        withCredentials: true
-      },
-      method:'post',
-      data:params,
-      responseType: 'blob',
-  });
+	      url: `${baseUrl}/rentBill/getPdf`,
+	      timeout: 30000, // 请求超时时间10s
+	      headers: {
+	      //'Content-Type': 'application/x-zip-compressed',
+	        'Authorization': '',//token orgin vaue  [token]
+	      },
+	      xhrFields: {
+	        withCredentials: true
+	      },
+	      method:'post',
+	      data:params,
+	      responseType: 'blob',
+	  });
+  },
+}
 
-
+/**
+ * config管理模块
+ */
+const configApi = {
+  // list
+  list (params) {
+    return axios.post(`${baseUrl}/rentConfig/list`, params)
+  },
+  // 删除(多条)
+  deleteByIds (params) {
+    return axios.post(`${baseUrl}/rentConfig/deleteByIds`, params)
+  },
+  // 删除
+  delete (params) {
+    return axios.post(`${baseUrl}/rentConfig/delete`, params)
+  },
+  // 保存
+  save (params) {
+    return axios.post(`${baseUrl}/rentConfig/add`, params)
+  },
+  // 更新
+  update (params) {
+    return axios.post(`${baseUrl}/rentConfig/update`, params)
+  },
+  // 详情
+  detail (params) {
+    return axios.post(`${baseUrl}/rentConfig/detail`, params)
+  },
+  // 查询
+  getByCondition (params) {
+    return axios.post(`${baseUrl}/rentConfig/getByCondition`, params)
+  },
+  // 保存或者更新
+  saveOrUpdate (params) {
+    return axios.post(`${baseUrl}/rentConfig/saveOrUpdate`, params)
   },
 }
 
@@ -246,5 +282,6 @@ export {
   houseApi,
   personApi,
   contractApi,
-  billApi
+  billApi,
+  configApi
 }
