@@ -31,8 +31,6 @@ const toLogin = () => {
  * @param {Number} code  请求失败的状态码
  */
 const errorHandle = (code, other) => {
-  console.log("返回回来的。。。。");
-  console.log(code);
   switch (code) {
     // 401 未登录状态，跳转登录页
     case 401:
@@ -83,8 +81,6 @@ instance.interceptors.request.use(
  */
 instance.interceptors.response.use(
   res => {
-    console.log("响应拦截器。。");
-    console.dir(res);
     if (res.status === 200) {
       return Promise.resolve(res.data)
     } else {
