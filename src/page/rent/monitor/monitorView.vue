@@ -2,14 +2,15 @@
     <div class="housechoose-panel">
         <div class="head-panel fixed-head">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
-            <button @click="changeType" class="btnclass head-save">切换简体</button>
+            <button @click="houseDetail" class="btnclass head-save">查看</button>
+            <button @click="takeRent" class="btnclass head-save">收租</button>
         </div>
         <div class="content-panel overflow-content">
             <div class="c-g-group" v-for="(val,key) in resulMap" :key="key">
                 <div class="gg-item"> 
                     {{key}}
                 </div>
-                <!-- <div class="m-group">
+                <div class="m-group">
                     <template v-for="(item) in val">
                         <div :key="item.houseCode">
                             <div :class="[setClass(item),{'chooseDiv':chooseSpan==item.houseCode}]"   class="m-m-div"  @click="selectHoust(item);">
@@ -20,24 +21,6 @@
                             </div>
                         </div>
                     </template>
-                </div> -->
-                <div class="c-group">
-                    <delete-slider v-for='(item,tIndex) in val' :key="tIndex" :dealArr="dealArr"  @funOne="rentLine(tIndex,item)" @funTwo="detailLine(tIndex,item)">
-                        <div class="content-panel-div" :key="item.houseCode">
-                            <div class="c-img" @click="houseBillList(item);">{{item.houseName}}</div>
-                            <div class="c-other">
-                                <div class="cc-room">{{item.groupName}}</div>
-                                <div class="cc-content">
-                                    <span class="ccc-time">记录{{item.allCount}}次</span> 
-                                </div>
-                            </div>
-                            <div class="cc-status">
-                                <div class="colorDiv" :class="[setClass(item)]">
-                                ({{item.leftDays===''?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
-                                </div>
-                            </div>
-                        </div>
-                    </delete-slider>
                 </div>
             </div>
         </div>
@@ -46,7 +29,6 @@
 
 <script>
 import {billApi} from "@/service/rent-api";
-import deleteSlider from '@/components/common/deleteSilder.vue'
 export default {
     data() {
         return {
@@ -61,16 +43,8 @@ export default {
             },
             resulMap:{},
             chooseSpan:'',
-            chooseItem:{},   //选中的事项
-            dealArr:[
-                {name:'收租',code:'use'},
-                {name:'标空置',code:'delete'},
-            ],  //需要显示的按钮个数，目前函数只支持3个函数，如有需要再加
-
+            chooseItem:{}   //选中的事项
         }
-    },
-    components:{
-        deleteSlider
     },
     computed:{
 
@@ -108,8 +82,6 @@ export default {
             billApi.monitorRentEndTime(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){
-                        console.log("result");
-                        console.dir(res.data);
                         this.resulMap = res.data;
                     }
                 }else{
@@ -122,8 +94,8 @@ export default {
         },
 
         //修改
-        houseBillList(item){
-            this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
+        houseDetail(){
+            this.$router.push({path:'rentBillList',query:{houseCode:this.chooseItem.houseCode}});
         },
         //选中房间
         selectHoust(item){
@@ -131,28 +103,10 @@ export default {
             this.chooseItem = item;
             //this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
         },
-        //切换显示形式
-        changeType(){
-            this.$router.push({path:'monitorView',query:{}});
-        },
         //收租
         takeRent(){
             this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:this.chooseItem.groupName,houseName:this.chooseItem.houseName,houseCode:this.chooseItem.houseCode}});
         },
-        //删除按钮对应的处理数据，对应绑定在deleteSlider的@funOne="deleteLine"上面
-        detailLine(index,item){
-            console.log("start to deleteLine the item....");
-            console.dir(item);
-            console.log(index);
-            this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
-        },
-        //已租按钮对应的处理数据,对应绑定在deleteSlider的@funOne="useLine"上面
-        rentLine(index,item){
-            console.dir("use.....line");
-            console.dir(item);
-            this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:item.groupName,houseName:item.houseName,houseCode:item.houseCode}});
-        }
-
     }
 }
 </script>
@@ -163,56 +117,28 @@ export default {
     background-color: rgb(240, 235, 235);
     .c-g-group{
         background-color: white;
-        padding: 0.5rem;
+        padding: 1rem;
         margin: 0.2rem 0.6rem 0rem 0.2rem;
     }
         .gg-item{
             padding-bottom: 1rem;
             border-bottom: 1px solid rgb(167, 165, 165);
         }
-    .content-panel-div{
-        background-color: white;
-        margin-bottom: 0.5rem;
-		padding-bottom: 0.5rem;
-        line-height: 2rem;
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-    }   
-        .c-img{
-            padding: 1rem;
-            background-color: lightgreen;
-            border-radius: 50%;
-            margin-right: 1rem;
+    .m-group{
+        display:flex;
+        flex-wrap:wrap;
+        padding:0.5rem;
+    }
+        .m-m-div{
+            padding:0.3rem;
+            margin-right:1rem;
+            margin-bottom:0.5rem;
+            text-align:center;	
+            border: 1px solid grey;
         }
-        .c-other{
-            flex-grow: 1;
-            margin-right: 2rem;
-            flex:1;
-        }
-                .ccc-time{
-                    font-size: 0.7rem;
-                    color: grey;
-                    
-                }
-                .ccc-money{
-                    float: right;
-                    color: blue;
-                    
-                }  
-        .cc-status{
-            flex:1;
-        }
-            .colorDiv{
-                line-height: 1rem;
-                text-align: center;
-                padding:0.3rem;
-                color:white;
-                margin-top:25%;
+            .m-m-m-div{
+                font-size:0.5rem;
             }
-		.c-button{
-			
-		}
 }
 .foot-panel{
     margin-top: 5rem;

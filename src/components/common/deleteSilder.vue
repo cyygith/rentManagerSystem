@@ -6,10 +6,10 @@
                 <slot></slot>
             </div>
             <div class="remove" :style="buttonCount" ref='remove'>
-                <div v-if="dealItem.length>0" class="btnFlex deleteDiv" @click="funOne">
+                <div v-if="dealItem.length>0" class="btnFlex useDiv" @click="funOne">
                     <div class="center-font">{{dealItem[0].name}}</div>
                 </div>
-                <div v-if="dealItem.length>1" class="btnFlex useDiv" @click="funTwo">
+                <div v-if="dealItem.length>1" class="btnFlex deleteDiv" @click="funTwo">
                     <div class="center-font">{{dealItem[1].name}}</div>
                 </div>
                 <div v-if="dealItem.length>2" class="btnFlex funThreeDiv" @click="funThree">
@@ -113,7 +113,7 @@
 .slider{
     width:100%;
     height: 90px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     position: relative
 }
 .content{
@@ -131,8 +131,7 @@
 .remove{
     position: absolute;
     width:120px;
-    height:89px;
-    background-color: #f60;
+    height:88px;
     border: 1px solid white;
     right:0;
     top:0;

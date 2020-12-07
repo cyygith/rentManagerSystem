@@ -104,6 +104,7 @@
     left: 0;
     background-color: white;
     border-top: 1px solid rgb(224, 224, 224);
+    z-index:999;
     .f-content{
         width: 100%;
         height: 100%;

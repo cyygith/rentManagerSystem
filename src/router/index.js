@@ -36,6 +36,7 @@ let router = new Router({
         },
         {path: '/function',component: resolve => require(['../page/rent/function/function.vue'], resolve),meta: { title: '功能' }},
         {path: '/monitor',component: resolve => require(['../page/rent/monitor/monitor.vue'], resolve),meta: { title: '监控' }},
+        {path: '/monitorView',component: resolve => require(['../page/rent/monitor/monitorView.vue'], resolve),meta: { title: '监控' }},
         
         //租房-账单管理
         {path: '/rentHouseChoose',component: resolve => require(['../page/rent/rentBill/rentHouseChoose.vue'], resolve)},
