@@ -5,7 +5,7 @@
         </div>
         <!--详细列表信息-->
         <div class="center-content overflow-content">
-            <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex">
+            <!-- <div class="content-panel" v-for='(tItem,tIndex) in tableData' :key="tIndex">
                 <div class="c-img">{{tItem.houseName}}</div>
                 <div class="c-other" @click="toDetail(tItem)">
                     <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
@@ -14,7 +14,19 @@
                         <span class="ccc-money">{{tItem.money}}元</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <delete-slider v-for='(tItem,tIndex) in tableData' :key="tIndex" :dealArr="dealArr"  @funOne="useLine(tIndex,tItem)" @funTwo="deleteLine(tIndex,tItem)">
+                <div class="content-panel">
+                    <div class="c-img">{{tItem.houseName}}</div>
+                    <div class="c-other" @click="toDetail(tItem)">
+                        <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
+                        <div class="cc-content">
+                            <span class="ccc-time">{{tItem.startTime}}-{{tItem.endTime}}</span> 
+                            <span class="ccc-money">{{tItem.money}}元</span>
+                        </div>
+                    </div>
+                </div>
+            </delete-slider>
         </div>
         <div class="load-more" v-if="this.page.totalCount>this.page.pageSize" @click="nextPage">加载更多...</div>
     </div>
@@ -22,6 +34,7 @@
 
 <script>
 import {billApi} from "@/service/rent-api";
+import deleteSlider from '@/components/common/deleteSilder.vue'
 export default {
     data() {
         return {
@@ -56,7 +69,15 @@ export default {
             	currPage:1,
             	totalPage:0
             },
+            dealArr:[
+                {name:'已租',code:'useDiv',method:'fun'},
+                {name:'删除',code:'deleteDiv',method:'deleteLine'},
+                // {name:'收租',code:'rentDiv',method:'funThree'},
+            ]
         }
+    },
+    components:{
+        deleteSlider
     },
     computed:{
 
@@ -110,6 +131,15 @@ export default {
                 loading.close();
             });	
         },
+        deleteLine(index,item){
+            console.log("start to delete the item....");
+            console.dir(item);
+            console.log(index);
+        },
+        useLine(index,item){
+            console.dir("use.....line");
+            console.log(item);
+        }
     }
 }
 </script>
@@ -123,8 +153,8 @@ export default {
         background-color: rgb(241, 238, 238);
         .content-panel{
             background-color: white;
-            padding: 0.5rem;
-            margin: 0.5rem;
+            padding: 0.5rem 0 0.5rem 0;
+            margin: 0.5rem 0 0.5rem 0;
             line-height: 1.5rem;
             display: flex;
             flex-direction: row;

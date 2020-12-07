@@ -10,7 +10,7 @@
                 <div class="gg-item"> 
                     {{key}}
                 </div>
-                <div class="m-group">
+                <!-- <div class="m-group">
                     <template v-for="(item) in val">
                         <div :key="item.houseCode">
                             <div :class="[setClass(item),{'chooseDiv':chooseSpan==item.houseCode}]"   class="m-m-div"  @click="selectHoust(item);">
@@ -21,6 +21,24 @@
                             </div>
                         </div>
                     </template>
+                </div> -->
+                <div class="c-group">
+                    <delete-slider v-for='(item,tIndex) in val' :key="tIndex" :dealArr="dealArr"  @funOne="rentLine(tIndex,tItem)" @funTwo="detailLine(tIndex,tItem)">
+                        <div class="content-panel-div" :key="item.houseCode" @click="selectHoust(item);">
+                            <div class="c-img">{{item.houseName}}</div>
+                            <div class="c-other">
+                                <div class="cc-room">{{item.groupName}}</div>
+                                <div class="cc-content">
+                                    <span class="ccc-time">记录{{item.allCount}}次</span> 
+                                </div>
+                            </div>
+                            <div class="cc-status">
+                                <div class="colorDiv" :class="[setClass(item),{'chooseDiv':chooseSpan==item.houseCode}]">
+                                ({{item.leftDays===''?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
+                                </div>
+                            </div>
+                        </div>
+                    </delete-slider>
                 </div>
             </div>
         </div>
@@ -29,6 +47,7 @@
 
 <script>
 import {billApi} from "@/service/rent-api";
+import deleteSlider from '@/components/common/deleteSilder.vue'
 export default {
     data() {
         return {
@@ -43,8 +62,16 @@ export default {
             },
             resulMap:{},
             chooseSpan:'',
-            chooseItem:{}   //选中的事项
+            chooseItem:{},   //选中的事项
+            dealArr:[
+                {name:'已租',code:'use'},
+                {name:'删除',code:'delete'},
+            ],  //需要显示的按钮个数，目前函数只支持3个函数，如有需要再加
+
         }
+    },
+    components:{
+        deleteSlider
     },
     computed:{
 
@@ -82,6 +109,8 @@ export default {
             billApi.monitorRentEndTime(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){
+                        console.log("result");
+                        console.dir(res.data);
                         this.resulMap = res.data;
                     }
                 }else{
@@ -107,6 +136,19 @@ export default {
         takeRent(){
             this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:this.chooseItem.groupName,houseName:this.chooseItem.houseName,houseCode:this.chooseItem.houseCode}});
         },
+        //删除按钮对应的处理数据，对应绑定在deleteSlider的@funOne="deleteLine"上面
+        deleteLine(index,item){
+            console.log("start to deleteLine the item....");
+            console.dir(item);
+            console.log(index);
+        },
+        //已租按钮对应的处理数据,对应绑定在deleteSlider的@funOne="useLine"上面
+        rentLine(index,item){
+            console.dir("use.....line");
+            console.dir(item);
+            this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:item.groupName,houseName:item.houseName,houseCode:item.houseCode}});
+        }
+
     }
 }
 </script>
@@ -117,28 +159,57 @@ export default {
     background-color: rgb(240, 235, 235);
     .c-g-group{
         background-color: white;
-        padding: 1rem;
+        padding: 0.5rem;
         margin: 0.2rem 0.6rem 0rem 0.2rem;
     }
         .gg-item{
             padding-bottom: 1rem;
             border-bottom: 1px solid rgb(167, 165, 165);
         }
-    .m-group{
-        display:flex;
-        flex-wrap:wrap;
-        padding:0.5rem;
-    }
-        .m-m-div{
-            padding:0.3rem;
-            margin-right:1rem;
-            margin-bottom:0.5rem;
-            text-align:center;	
-            border: 1px solid grey;
+    .content-panel-div{
+        background-color: white;
+        margin-bottom: 0.5rem;
+		padding-bottom: 0.5rem;
+        line-height: 1.5rem;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+		border-bottom:1px solid grey;
+    }   
+        .c-img{
+            padding: 1rem;
+            background-color: lightgreen;
+            border-radius: 50%;
+            margin-right: 1rem;
         }
-            .m-m-m-div{
-                font-size:0.5rem;
+        .c-other{
+            flex-grow: 1;
+            margin-right: 2rem;
+            flex:1;
+        }
+                .ccc-time{
+                    font-size: 0.7rem;
+                    color: grey;
+                    
+                }
+                .ccc-money{
+                    float: right;
+                    color: blue;
+                    
+                }  
+        .cc-status{
+            flex:1;
+        }
+            .colorDiv{
+                line-height: 1rem;
+                text-align: center;
+                padding:0.3rem;
+                color:white;
+                margin-top:25%;
             }
+		.c-button{
+			
+		}
 }
 .foot-panel{
     margin-top: 5rem;
