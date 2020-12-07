@@ -70,7 +70,7 @@ export default {
             	totalPage:0
             },
             dealArr:[
-                {name:'已租',code:'useDiv',method:'fun'},
+                {name:'收据',code:'useDiv',method:'fun'},
                 {name:'删除',code:'deleteDiv',method:'deleteLine'},
                 // {name:'收租',code:'rentDiv',method:'funThree'},
             ]
