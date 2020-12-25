@@ -22,7 +22,7 @@
                     </template>
                 </div> -->
                 <div class="c-group">
-                    <delete-slider v-for='(item,tIndex) in val' :key="tIndex" :dealArr="dealArr"  @funOne="rentLine(tIndex,item)" @funTwo="detailLine(tIndex,item)">
+                    <delete-slider v-for='(item,tIndex) in val' :key="tIndex" :dealArr="dealArr"  @funOne="rentLine(tIndex,item)" @funTwo="setNoRent(tIndex,item)">
                         <div class="content-panel-div" :key="item.houseCode">
                             <div class="c-img" @click="houseBillList(item);">{{item.houseName}}</div>
                             <div class="c-other">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="cc-status">
                                 <div class="colorDiv" :class="[setClass(item)]">
-                                ({{item.leftDays===''?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
+                                ({{item.status==='2'?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
                                 </div>
                             </div>
                         </div>
@@ -46,6 +46,7 @@
 
 <script>
 import {billApi} from "@/service/rent-api";
+import {houseApi} from "@/service/rent-api";
 import deleteSlider from '@/components/common/deleteSilder.vue'
 export default {
     data() {
@@ -89,7 +90,8 @@ export default {
         },
         setClass(item){
             let leftDays = item.leftDays;
-            if(leftDays===''){
+            let status = item.status;
+            if(status==='2'){
                 return 'greyBill';
             }else if(leftDays<0||leftDays===0){
                 return 'redBill';
@@ -108,8 +110,6 @@ export default {
             billApi.monitorRentEndTime(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){
-                        console.log("result");
-                        console.dir(res.data);
                         this.resulMap = res.data;
                     }
                 }else{
@@ -118,7 +118,7 @@ export default {
                 loading.close();
             }).catch(error=>{
                 loading.close();
-            });;	
+            });
         },
 
         //修改
@@ -139,17 +139,34 @@ export default {
         takeRent(){
             this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:this.chooseItem.groupName,houseName:this.chooseItem.houseName,houseCode:this.chooseItem.houseCode}});
         },
-        //删除按钮对应的处理数据，对应绑定在deleteSlider的@funOne="deleteLine"上面
-        detailLine(index,item){
-            console.log("start to deleteLine the item....");
-            console.dir(item);
-            console.log(index);
-            this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
+        //置为【未租】按钮对应的处理数据，对应绑定在deleteSlider的@funOne="setNoRent"上面
+        setNoRent(index,item){
+            let param = {
+                id:item.houseId,
+                status:"2"
+            };
+            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
+            houseApi.update(param).then((res)=>{
+                if(res.code == "0"){
+                    this.$message({
+                        message: '操作成功',
+                        center: true,
+                        type: 'success',
+                        customClass:'customClass',
+                        offset:300
+                    })
+                    this.detail();
+                }else{
+                    this.$alert('获取信息失败，联系管理员','提示信息');
+                }
+                loading.close();
+            }).catch(error=>{
+                loading.close();
+            });
+            
         },
         //已租按钮对应的处理数据,对应绑定在deleteSlider的@funOne="useLine"上面
         rentLine(index,item){
-            console.dir("use.....line");
-            console.dir(item);
             this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:item.groupName,houseName:item.houseName,houseCode:item.houseCode}});
         }
 

@@ -22,6 +22,11 @@
                     <svg v-if="!eyeShow" @click="showEye" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-labelledby="eyeIconTitle" stroke="green" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="eyeIconTitle">Visible (eye)</title> <path d="M22 12C22 12 19 18 12 18C5 18 2 12 2 12C2 12 5 6 12 6C19 6 22 12 22 12Z"/> <circle cx="12" cy="12" r="3"/> </svg>
                 </span> -->
             </div>
+            <div class="item-content">
+                <el-form-item label="记住我" prop="rememberMe">
+                    <el-switch v-model="form.rememberMe"></el-switch>
+                </el-form-item>
+            </div>
            
         </div>
         <div class="l-button">
@@ -82,6 +87,8 @@ export default {
                     commonApi.login(param).then((res)=>{
                         try{
                             if(res.code == "0"){
+                            	console.log("userData");
+                            	console.dir(res);
                                 sessionStorage.setItem('access-token',res.data.token);
                                 // sessionStorage.setItem('roles',JSON.stringify(res.data.roles));
                                 sessionStorage.setItem('user',JSON.stringify(res.data.user));
@@ -95,7 +102,6 @@ export default {
                         loading.close();
                     });
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });  

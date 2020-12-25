@@ -215,9 +215,6 @@ export default {
             param.append("size",1000);
             groupApi.getListByGroup(param).then((res)=>{
                 if(res.code == "0"){
-                    console.log("fangwuliebiao ....");
-                    console.dir(res);
-                    console.dir(res.data)
                   this.groupHouseList = res.data;
                 }else{
                   this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});

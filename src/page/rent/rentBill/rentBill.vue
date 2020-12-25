@@ -7,6 +7,12 @@
         </div>
         <div class="content-panel overflow-content">
             <div class="c-item">
+                <div class="cc-name">状态</div>
+                <div class="cc-value">
+                    <span :class="cacheTypeClass">{{cacheType}}</span>
+                </div>
+            </div>
+            <div class="c-item">
                 <div class="cc-name">房屋编号</div>
                 <div class="cc-value">{{form.groupName}} {{form.houseName}}</div>
             </div>
@@ -100,7 +106,9 @@ export default {
             waterPayTypeArr:{1:'按吨结算',2:'按人计算'},
             payTypeArr:{1:'支付宝',2:'微信',3:'现金'},
             waterFee:0,
-            elecFee:0
+            elecFee:0,
+            cacheType:'',//缓存类型
+            cacheTypeClass:'',//缓存类型样式
         }
     },
     computed:{
@@ -147,18 +155,19 @@ export default {
             let param = {
                 id:this.form.id,
                 sum:this.form.sum,
-                status:'1'
+                houseCode:this.form.houseCode
             };
             let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
-            billApi.saveOrUpdate(param).then((res)=>{
+            billApi.updateBillAndSetRenting(param).then((res)=>{
                 if(res.code == "0"){
                     this.$message({
-                        message: '生成成功',
+                        message: '收租完成',
                         center: true,
                         type: 'success',
                         customClass:'customClass',
                         offset:300
                     })
+                    this.$router.back(-1);
                 }else{
                     this.$alert('提交失败，请联系管理员处理','提示信息');
                 }
@@ -171,8 +180,6 @@ export default {
             param.append("id",id);
             // let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
             billApi.getPdf(param).then(x => {   //
-                console.log("finally here....");
-                console.dir(x);
                 // if (x.status == 200) {
                     // vm.dialogExportOrder = false;
                     const content = x;
@@ -192,7 +199,6 @@ export default {
                     }
                 // }
             }).catch(function(error){
-                console.log(error);
                 console.dir(error);
             	// console.log(error.response)   //可获取错误的返回信息
                 // if (error.response.status==400) {
@@ -200,29 +206,6 @@ export default {
                 // }
             }).finally(() => {
             
-            });	
-        },
-        toReceipt1(item,value){
-            // this.$router.push({path:'rentReceipt',query:{id:this.form.id}});
-            let param = {
-                id:this.form.id,
-                sum:this.form.sum,
-                status:'1'
-            };
-            let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
-            billApi.getPdf(param).then((res)=>{
-                if(res.code == "0"){
-                    this.$message({
-                        message: '生成成功',
-                        center: true,
-                        type: 'success',
-                        customClass:'customClass',
-                        offset:300
-                    })
-                }else{
-                    this.$alert('提交失败，请联系管理员处理','提示信息');
-                }
-                loading.close();
             });	
         },
         // 从收租界面跳过来
@@ -240,16 +223,33 @@ export default {
             let loading = this.$loading({lock:true,text:'获取中....',background:'rgba(0,0,0,0.5)'});
             billApi.doRent(param).then((res)=>{
                 if(res.code == "0"){
-                    console.log("收租完是什么:");
-                    console.dir(res.data);
                     if(res.data){    
                         this.form = res.data;
                         this.form.waterPayTypeName = this.waterPayTypeArr[res.data.waterPayType];//水费支付方式
                         this.form.payTypeName = this.payTypeArr[res.data.payType];//电费支付方式
                     }
+                    if(!!res.data1){
+                        let cType = res.data1.cacheType;
+                        switch(cType){
+                            case "0":
+                              this.cacheType = "新增";
+                              this.cacheTypeClass = "cacheTypeOne";
+                              break;
+                            case "1":
+                              this.cacheType = "缓存";
+                              this.cacheTypeClass = "cacheTypeTwo";
+                              break;
+                            case "2":
+                              this.cacheType = "全新";
+                              this.cacheTypeClass = "cacheTypeThree";
+                              break;
+                        }
+                    }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
+                loading.close();
+            }).catch(error=>{
                 loading.close();
             });	 
         },
@@ -289,6 +289,18 @@ export default {
     .smallsize{
         size: 0.5rem;
         color:grey;
+    }
+    .cacheTypeOne{
+        background-color:lightgreen;
+        padding:5px;
+    }
+    .cacheTypeTwo{
+        background-color:lightpink;
+        padding:5px;
+    }
+    .cacheTypeThree{
+        background-color:lightblue;
+        padding:5px;
     }
 }
 </style>

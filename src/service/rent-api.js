@@ -211,6 +211,10 @@ const billApi = {
   saveOrUpdate (params) {
     return axios.post(`${baseUrl}/rentBill/saveOrUpdate`, params)
   },
+  // 保存或者更新
+  updateBillAndSetRenting (params) {
+    return axios.post(`${baseUrl}/rentBill/updateBillAndSetRenting`, params)
+  },
   // 收租 doRent
   doRent (params) {
     return axios.post(`${baseUrl}/rentBill/doRent`, params)

@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div> -->
-            <delete-slider v-for='(tItem,tIndex) in tableData' :key="tIndex" :dealArr="dealArr"  @funOne="useLine(tIndex,tItem)" @funTwo="deleteLine(tIndex,tItem)">
+            <delete-slider v-for='(tItem,tIndex) in tableData' :key="tIndex" :dealArr="dealArr"  @funOne="deleteLine(tIndex,tItem)">
                 <div class="content-panel">
                     <div class="c-img">{{tItem.houseName}}</div>
                     <div class="c-other" @click="toDetail(tItem)">
@@ -70,7 +70,7 @@ export default {
             	totalPage:0
             },
             dealArr:[
-                {name:'收据',code:'useDiv',method:'fun'},
+                // {name:'收据',code:'useDiv',method:'fun'},
                 {name:'删除',code:'deleteDiv',method:'deleteLine'},
                 // {name:'收租',code:'rentDiv',method:'funThree'},
             ]
@@ -123,22 +123,54 @@ export default {
                   this.tableData.push.apply(this.tableData,res.data.list);
                   this.page.pageSize = res.data.pageSize;
                   this.page.totalCount = res.data.total;
-                  console.log("总共几条："+res.data.total);
                 }else{
                   this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
                   //this.$alert('获取信息失败，联系管理员','提示信息');
                 }
                 loading.close();
-            });	
+            }).catch(error=>{
+                loading.close();
+            });
         },
         deleteLine(index,item){
-            console.log("start to delete the item....");
-            console.dir(item);
-            console.log(index);
+            let param = {
+                ids:item.id
+            }
+            billApi.deleteByIds(param).then((res)=>{
+                if(res.code == "0"){
+                    this.$message({
+                        message: '删除完成',
+                        center: true,
+                        type: 'success',
+                        customClass:'customClass',
+                        offset:300
+                    })
+                    this.reloadList();
+                }else{
+                  this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
+                }
+            }).catch(error=>{
+                
+            });
+        },
+        // 重新获取列表
+        reloadList(){
+            let houseCode = this.$route.query.houseCode;
+            let param = new URLSearchParams();
+            param.append("page",this.page.currPage);
+            param.append("size",this.page.pageSize);
+            param.append("houseCode",houseCode);
+            billApi.list(param).then((res)=>{
+                if(res.code == "0"){
+                  this.tableData = res.data.list;
+                }else{
+                  this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
+                  //this.$alert('获取信息失败，联系管理员','提示信息');
+                }
+            });
         },
         useLine(index,item){
             console.dir("use.....line");
-            console.log(item);
         }
     }
 }

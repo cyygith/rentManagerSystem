@@ -160,8 +160,6 @@ export default {
             param.append("id",id);
             // let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
             contractApi.getPdf(param).then(x => {   //
-                console.log("finally here....");
-                console.dir(x);
                 // if (x.status == 200) {
                     // vm.dialogExportOrder = false;
                     const content = x;
@@ -181,8 +179,6 @@ export default {
                     }
                 // }
             }).catch(function(error){
-                console.log(error);
-                console.dir(error);
             	// console.log(error.response)   //可获取错误的返回信息
                 // if (error.response.status==400) {
                     

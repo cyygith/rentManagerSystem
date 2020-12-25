@@ -16,7 +16,7 @@
                             <div :class="[setClass(item),{'chooseDiv':chooseSpan==item.houseCode}]"   class="m-m-div"  @click="selectHoust(item);">
                                 <span class="m-m-m-span" >{{item.houseName}}</span>
                                 <div class="m-m-m-div">{{item.allCount}}
-                                    ({{item.leftDays===''?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
+                                    ({{item.leftDays==='2'?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
                                 </div>	
                             </div>
                         </div>

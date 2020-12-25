@@ -93,7 +93,6 @@ export default {
                         loading.close();
                     });
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             }); 

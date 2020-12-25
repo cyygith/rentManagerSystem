@@ -62,8 +62,6 @@ export default {
             billApi.getListByGroup(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){
-                        console.log("value....");
-                        console.dir(res.data);
                         this.resulMap = res.data;
                     }
                 }else{
@@ -91,7 +89,6 @@ export default {
             this.$confirm('确定删除该记录?', '提示', {confirmButtonText: '确定',cancelButtonText: '取消',type: 'warning'}).then(() => {
                 let param = new URLSearchParams();
                 param.append("id",this.chooseItem.id);
-                console.log("delete  item...."+this.chooseItem.id);
                 houseApi.delete(param).then(res => {
                     if (res.code == "0") {
                         this.$message({

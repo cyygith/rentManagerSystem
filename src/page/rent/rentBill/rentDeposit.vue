@@ -181,7 +181,9 @@ export default {
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
                 loading.close();
-            });	
+            }).catch(error=>{
+                loading.close();
+            });
         },
         resize(){
         	let width = window.innerWidth,

@@ -128,8 +128,6 @@ export default {
             param.append("page",this.page.currPage);
             param.append("size",this.page.pageSize);
             groupApi.list(param).then((res)=>{
-                console.log("获取组别情况");
-                console.dir(res.data);
                 if(res.code == "0"){
                     this.groups = res.data.list;
                     this.page.pageSize = res.data.pageSize;

@@ -2,6 +2,7 @@
     <div class="housechoose-panel">
         <div class="head-panel fixed-head">
             <button @click="backBefore" class="btnclass head-back">< 退回</button>
+            <button @click="houseDetail" class="btnclass head-save">查看</button>
             <button @click="takeRent" class="btnclass head-save">收租</button>
         </div>
         <div class="content-panel overflow-content">
@@ -9,12 +10,20 @@
                 <div class="gg-item"> 
                     {{key}}
                 </div>
-                <div class="c-group">
-                    <span @click="toRent(item);" :class="{'c-g-item-this':chooseSpan==item.houseCode}" class="c-g-item" v-for="(item) in val" :key="item.houseCode">{{item.houseName}}</span>
+                <div class="m-group">
+                    <template v-for="(item) in val">
+                        <div :key="item.houseCode">
+                            <div :class="[setClass(item),{'chooseDiv':chooseSpan==item.houseCode}]"   class="m-m-div"  @click="selectHoust(item);">
+                                <span class="m-m-m-span" >{{item.houseName}}</span>
+                                <div class="m-m-m-div">{{item.allCount}}
+                                    ({{item.leftDays===''?'未租':(item.leftDays < 0?('超'+Math.abs(item.leftDays)+'天'):('剩'+item.leftDays+'天'))}})
+                                </div>	
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
-        <div class="foot-panel"> </div>
     </div>
 </template>
 
@@ -42,7 +51,6 @@ export default {
     },
     mounted(){
         this.detail();
-        // this.id = this.$route.query.id;
     },
     methods:{
         // 退出登录
@@ -53,12 +61,25 @@ export default {
         backBefore(){
             this.$router.back(-1);
         },
+        setClass(item){
+            let leftDays = item.leftDays;
+            if(leftDays===''){
+                return 'greyBill';
+            }else if(leftDays<0||leftDays===0){
+                return 'redBill';
+            }else if(leftDays>0&&leftDays<3){
+                return 'orangeBill';
+            }else {
+                return 'greenBill';
+            }
+            
+        },
         // 获取详情  getListByGroup
         detail(){
             let idd = this.$route.query.id;
             let param = new URLSearchParams();
             let loading = this.$loading({lock:true,text:'保存中....',background:'rgba(0,0,0,0.5)'});
-            billApi.getListByGroup(param).then((res)=>{
+            billApi.monitorRentEndTime(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){
                         this.resulMap = res.data;
@@ -67,51 +88,25 @@ export default {
                     this.$alert('获取信息失败，联系管理员','提示信息');
                 }
                 loading.close();
-            });	
+            }).catch(error=>{
+                loading.close();
+            });;	
         },
-        //编辑
-        edit(){
-            //this.$router.push('chooseCatalog');
-            this.$router.push({path:'chooseCatalog',query:{id:this.id}});
-            
+
+        //修改
+        houseDetail(){
+            this.$router.push({path:'rentBillList',query:{houseCode:this.chooseItem.houseCode}});
+        },
+        //选中房间
+        selectHoust(item){
+            this.chooseSpan = item.houseCode;
+            this.chooseItem = item;
+            //this.$router.push({path:'rentBillList',query:{houseCode:item.houseCode}});
         },
         //收租
         takeRent(){
             this.$router.push({path:'rentBill',query:{type:'rentHouseChoose',groupName:this.chooseItem.groupName,houseName:this.chooseItem.houseName,houseCode:this.chooseItem.houseCode}});
         },
-        //选中收租情况
-        toRent(item){
-            this.chooseSpan = item.houseCode;
-            this.chooseItem = item;
-        },
-        //删除
-        del() {
-            this.$confirm('确定删除该记录?', '提示', {confirmButtonText: '确定',cancelButtonText: '取消',type: 'warning'}).then(() => {
-                let param = new URLSearchParams();
-                param.append("id",this.id);
-                accountApi.delete(param).then(res => {
-                    if (res.code == "0") {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!',
-                            duration: 2000
-                        });
-                        this.$router.back(-1);
-                    }else{
-                        this.$message({
-                            type: 'error',
-                            message: '删除失败，联系管理员',
-                            duration: 2000
-                        });
-                    }
-                });
-            }).catch((e) => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });          
-            });   
-        }
     }
 }
 </script>
@@ -129,9 +124,32 @@ export default {
             padding-bottom: 1rem;
             border-bottom: 1px solid rgb(167, 165, 165);
         }
-        .hh-item{
-            padding: 1rem;
-
+    .m-group{
+        display:flex;
+        flex-wrap:wrap;
+        padding:0.5rem;
+    }
+        .m-m-div{
+            padding:0.3rem;
+            margin-right:1rem;
+            margin-bottom:0.5rem;
+            text-align:center;	
+            border: 1px solid grey;
         }
+            .m-m-m-div{
+                font-size:0.5rem;
+            }
 }
+.foot-panel{
+    margin-top: 5rem;
+}
+//选中样式
+.chooseDiv{
+	transform: scale(1.1);
+	box-shadow: 0px 0px 18px rgba(0,0,0,0.5)
+} 
+.redBill{background-color:red;}
+.orangeBill{background-color:orange;}
+.greenBill{background-color:green;}
+.greyBill{background-color:grey;}
 </style>

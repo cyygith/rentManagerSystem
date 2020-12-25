@@ -47,6 +47,7 @@
             <div class="c-item" v-if="showItem=='remark'" >
                 <textarea placeholder="请输入备注" rows="5" class="c-textarea" name="remark" v-model="form.remark"></textarea>
             </div>
+            <div class="clearDiv"><span class="clearSpan" @click="clearItem">清空</span></div>
         </div>
     </div>
 </template>
@@ -116,7 +117,7 @@ export default {
             billApi.saveOrUpdate(param).then((res)=>{
                 if(res.code == "0"){
                     this.$message({
-                        message: '提交成功',
+                        message: '保存成功',
                         center: true,
                         type: 'success',
                         customClass:'customClass',
@@ -127,8 +128,14 @@ export default {
                     this.$alert('提交失败，请联系管理员处理','提示信息');
                 }
                 loading.close();
+            }).catch(error=>{
+                loading.close();
             });	
 
+        },
+        //清空
+        clearItem(){
+            this.form[this.showItem] = "";
         },
     }
 }
@@ -140,6 +147,15 @@ export default {
     background-color: grey;
     .content-panel{
         background-color: white;
+    }
+    .clearDiv{
+        padding:1rem;
+        text-align: right;
+        margin-right: 1rem;
+    }
+    .clearSpan{
+        padding:7px;
+        background-color:lightblue;
     }
 }    
 </style>
