@@ -40,6 +40,14 @@
                 <div class="cc-name">租住人数</div>
                 <div class="cc-value" @click="toEdit('rentNum',form.rentNum);">{{form.rentNum}}人<span class="ccc-span">></span></div>
             </div>
+            <div class="c-item">
+                <div class="cc-name">人数详情</div>
+                <div class="cc-value" @click="toEdit('personCodes',form.personCodes);">
+                    <template v-for='(item,idx) in personList'>
+                        {{item.personName}},
+                    </template>
+                <span class="ccc-span">></span></div>
+            </div>
             <div class="c-item" v-if="form.waterPayType == '1'">
                 <div class="cc-name">上月水吨数</div>
                 <div class="cc-value" @click="toEdit('lastWater',form.lastWater);">{{form.lastWater}}吨<span class="ccc-span">></span></div>
@@ -109,6 +117,8 @@ export default {
             elecFee:0,
             cacheType:'',//缓存类型
             cacheTypeClass:'',//缓存类型样式
+            personCodeName:'',//用户列表
+            personList:[],
         }
     },
     computed:{
@@ -120,6 +130,8 @@ export default {
     watch:{
         "form.sum":function(){
             if(this.form.waterPayType == '1'){//水费按吨结算
+                console.log(this.form.currWater);
+                console.log(this.form.currWater);
                 if(this.form.currWater!=null&&this.form.lastWater!=null){
                     this.waterFee = parseFloat(this.form.currWater - this.form.lastWater)*5;
                 }
@@ -228,7 +240,20 @@ export default {
                         this.form.waterPayTypeName = this.waterPayTypeArr[res.data.waterPayType];//水费支付方式
                         this.form.payTypeName = this.payTypeArr[res.data.payType];//电费支付方式
                     }
+                    console.log("aaabbbb");
+                    console.dir(res.data1);
                     if(!!res.data1){
+                        console.log("come in...");
+                        //用户列表
+                        let persons = res.data1.persons;
+                        console.log("persons" +persons);
+                        console.log(!!persons);
+                        if(!!persons){
+                            this.personList = persons;
+                            this.personCodeName = persons.join(",");
+                        }  
+
+                        //类型
                         let cType = res.data1.cacheType;
                         switch(cType){
                             case "0":
@@ -244,6 +269,7 @@ export default {
                               this.cacheTypeClass = "cacheTypeThree";
                               break;
                         }
+                        
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');

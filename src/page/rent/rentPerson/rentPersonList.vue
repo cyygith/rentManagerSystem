@@ -153,7 +153,9 @@ export default {
 <style lang="scss" scoped>
 @import '../common/commonstyle.css';
 .list-panel{
-    background-color: rgb(241, 238, 238);
+    .overflow-content{
+        background-color: #f1eeee;
+    }
     .content-panel{
         background-color: white;
         padding: 0.5rem;

@@ -1,6 +1,20 @@
 import { baseUrl } from '@/config/env'
 import axios from './http'
 
+/**
+ * 报表模块
+ */
+const chartApi = {
+  // 根据房间号统计所收租金总数
+  getRentSummaryGroup (params) {
+    return axios.post(`${baseUrl}/rentBill/getRentSummaryGroup`, params)
+  },
+  // 根据具体房间号，统计所收详细租金情况 
+  getRentSummaryByMonth (params) {
+    return axios.post(`${baseUrl}/rentBill/getRentSummaryByMonth`, params)
+  },
+}
+
 
 /**
  * group管理模块
@@ -212,6 +226,10 @@ const billApi = {
     return axios.post(`${baseUrl}/rentBill/saveOrUpdate`, params)
   },
   // 保存或者更新
+  saveOrUpdateBillAndPerson (params) {
+    return axios.post(`${baseUrl}/rentBill/saveOrUpdateBillAndPerson`, params)
+  },
+  // 保存或者更新
   updateBillAndSetRenting (params) {
     return axios.post(`${baseUrl}/rentBill/updateBillAndSetRenting`, params)
   },
@@ -287,5 +305,6 @@ export {
   personApi,
   contractApi,
   billApi,
-  configApi
+  configApi,
+  chartApi
 }

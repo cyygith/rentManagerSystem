@@ -87,7 +87,7 @@ export default {
             groupApi.getByCondition(param).then((res)=>{
                 if(res.code == "0"){
                     if(res.data){    
-                        this.form = res.data;
+                        this.form = res.data[0];
                     }
                 }else{
                     this.$alert('获取信息失败，联系管理员','提示信息');

@@ -42,10 +42,12 @@
 		            <div class="c-other" @click="toDetail(tItem)">
 		                <div class="cc-room">{{tItem.groupName}} {{tItem.houseName}}</div>
 		                <div class="cc-content">
-		                    <span class="ccc-time">{{tItem.startTime}}-{{tItem.endTime}}</span> 
+		                    <span class="ccc-time">租期：{{tItem.startTime}}-{{tItem.endTime}}</span> 
 		                    <span class="ccc-money">{{tItem.money}}元</span>
 		                </div>
+                        <div class="cc-upTime">{{tItem.updateTime}}</div>
 		            </div>
+                    
 		        </div>
             </div>
             <div class="load-more" @click="nextPage">加载更多...</div>
@@ -143,6 +145,8 @@ export default {
                   this.tableData.push.apply(this.tableData,res.data.list);
                   this.page.pageSize = res.data.pageSize;
                   this.page.totalCount = res.data.total;
+                  console.log("log...");
+                  console.dir(this.tableData);
                 }else{
                   this.$message({showClose:true,message:'程序出现异常，请联系管理员处理'});
                   //this.$alert('获取信息失败，联系管理员','提示信息');
@@ -319,7 +323,7 @@ export default {
         width: 100%;
     }   
         .c-img{
-            padding: 1rem;
+            padding: 1.5rem 1rem 1rem 1rem;
             background-color: lightgreen;
             border-radius: 50%;
             margin-right: 1rem;
@@ -338,6 +342,9 @@ export default {
                     color: blue;
                     
                 }
+        .cc-upTime{
+            font-size: 0.5rem;
+        }
     .foot-panel{
         padding: 0.3rem;
     }

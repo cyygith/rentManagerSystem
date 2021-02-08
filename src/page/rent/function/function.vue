@@ -24,6 +24,10 @@
                 <div class="cc-name">参数配置</div>
                 <div class="cc-value" @click="toConfig('money',form.money);"><span class="ccc-span">></span></div>
             </div>
+            <div class="c-item">
+                <div class="cc-name">报表</div>
+                <div class="cc-value" @click="toChart('money',form.money);"><span class="ccc-span">></span></div>
+            </div>
         </div>
     </div>
 </template>
@@ -78,6 +82,10 @@ export default {
         //参数配置
         toConfig(item,value){
             this.$router.push({path:'rentContractList',query:{}});
+        },
+        //参数配置
+        toChart(item,value){
+            this.$router.push({path:'rentLineChart',query:{}});
         },
         
     }

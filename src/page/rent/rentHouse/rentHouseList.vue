@@ -120,7 +120,9 @@ export default {
 <style lang="scss" scoped>
 @import '../common/commonstyle.css';
 .housechoose-panel{
-    background-color: rgb(240, 235, 235);
+    .overflow-content{
+        background-color: #f1eeee;
+    }
     .c-g-group{
         background-color: white;
         padding: 1rem;

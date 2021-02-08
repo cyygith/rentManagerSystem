@@ -26,7 +26,6 @@ const dateTime = {
      * 获取指定日期的下个月日期
      */
     getNextMonthDate(date){
-        if(!date)  return "";
     	var arr = date.split('-');
     	var year = arr[0];//获取当前日期的年份
     	var month = arr[1];//获取当前日期的月份

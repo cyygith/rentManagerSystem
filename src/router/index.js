@@ -75,6 +75,9 @@ let router = new Router({
         {path: '/rentConfigModify',component: resolve => require(['../page/rent/rentConfig/rentConfigModify.vue'], resolve)},
         {path: '/rentConfigDetail',component: resolve => require(['../page/rent/rentConfig/rentConfigDetail.vue'], resolve)},
         {path: '/rentConfigList',component: resolve => require(['../page/rent/rentConfig/rentConfigList.vue'], resolve)},
+      
+        //chart - 报表
+        {path: '/rentLineChart',component: resolve => require(['../page/rent/chart/rentLineChart.vue'], resolve)},
       ]
     },
 
